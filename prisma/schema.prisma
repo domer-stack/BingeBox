@@ -1,0 +1,103 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id          String   @id @default(cuid())
+  username    String   @unique
+  email       String   @unique
+  password    String
+  displayName String?
+  bio         String?
+  createdAt   DateTime @default(now())
+
+  diaryEntries DiaryEntry[]
+  watchlist    WatchlistItem[]
+  lists        ShowList[]
+  diaryLikes   DiaryLike[]
+
+  followers Follow[] @relation("following")
+  following Follow[] @relation("followers")
+}
+
+model DiaryEntry {
+  id            String   @id @default(cuid())
+  userId        String
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tmdbShowId    Int
+  showName      String
+  seasonNumber  Int
+  episodeNumber Int
+  episodeName   String?
+  rating        Float?
+  review        String?
+  watchedAt     DateTime @default(now())
+  createdAt     DateTime @default(now())
+
+  likes DiaryLike[]
+
+  @@unique([userId, tmdbShowId, seasonNumber, episodeNumber])
+  @@index([userId, watchedAt])
+}
+
+model WatchlistItem {
+  id         String   @id @default(cuid())
+  userId     String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tmdbShowId Int
+  showName   String
+  addedAt    DateTime @default(now())
+
+  @@unique([userId, tmdbShowId])
+}
+
+model ShowList {
+  id          String     @id @default(cuid())
+  userId      String
+  user        User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title       String
+  description String?
+  isPublic    Boolean    @default(true)
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  items       ListItem[]
+}
+
+model ListItem {
+  id         String   @id @default(cuid())
+  listId     String
+  list       ShowList @relation(fields: [listId], references: [id], onDelete: Cascade)
+  tmdbShowId Int
+  showName   String
+  position   Int      @default(0)
+  addedAt    DateTime @default(now())
+
+  @@unique([listId, tmdbShowId])
+}
+
+model Follow {
+  id          String   @id @default(cuid())
+  followerId  String
+  followingId String
+  follower    User     @relation("followers", fields: [followerId], references: [id], onDelete: Cascade)
+  following   User     @relation("following", fields: [followingId], references: [id], onDelete: Cascade)
+  createdAt   DateTime @default(now())
+
+  @@unique([followerId, followingId])
+}
+
+model DiaryLike {
+  id           String     @id @default(cuid())
+  userId       String
+  diaryEntryId String
+  user         User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  diaryEntry   DiaryEntry @relation(fields: [diaryEntryId], references: [id], onDelete: Cascade)
+  createdAt    DateTime   @default(now())
+
+  @@unique([userId, diaryEntryId])
+}

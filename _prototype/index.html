@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Seriesboxd — Your life in TV</title>
+  <meta name="description" content="Track TV shows you've watched, rate and review series, build lists, and follow friends. The social network for TV lovers.">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header class="site-header"></header>
+
+  <section class="hero">
+    <div class="hero-bg" style="background-image: url('https://image.tmdb.org/t/p/original/ggFHVNu6YYI5L9pCfOacjizRGh.jpg')"></div>
+    <div class="hero-content">
+      <h1 class="hero-tagline">Your life in TV</h1>
+      <p class="hero-sub">Track every show you've watched. Save those you want to see. Tell your friends what's good.</p>
+      <button class="btn btn-primary" id="hero-cta" style="font-size:1rem;padding:12px 24px">Get started — it's free!</button>
+      <p style="margin-top:12px;font-size:0.875rem;color:var(--text-muted)"><strong style="color:var(--text-secondary)">The social network for TV lovers.</strong></p>
+
+      <div class="hero-features">
+        <div class="hero-feature">
+          <h3>Track shows you've watched</h3>
+          <p>Keep a diary of every series from the day you join — or log your entire watch history.</p>
+        </div>
+        <div class="hero-feature">
+          <h3>Rate on a five-star scale</h3>
+          <p>Record your reaction with half-star precision and share with the community.</p>
+        </div>
+        <div class="hero-feature">
+          <h3>Write & share reviews</h3>
+          <p>Follow friends and other members to discover passionate TV criticism and discussion.</p>
+        </div>
+        <div class="hero-feature">
+          <h3>Build lists & watchlists</h3>
+          <p>Curate collections on any topic and keep a watchlist of shows to binge next.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-header">
+      <h2 class="section-title">Popular this week</h2>
+      <a href="browse.html" class="section-link">All shows →</a>
+    </div>
+    <div id="popular-shows"></div>
+  </section>
+
+  <section class="section">
+    <div class="section-header">
+      <h2 class="section-title">Recent activity</h2>
+      <a href="diary.html" class="section-link">Your diary →</a>
+    </div>
+    <div class="activity-list" id="activity-feed"></div>
+  </section>
+
+  <section class="section">
+    <div class="section-header">
+      <h2 class="section-title">Popular lists</h2>
+      <a href="lists.html" class="section-link">All lists →</a>
+    </div>
+    <div class="lists-grid" id="popular-lists"></div>
+  </section>
+
+  <section class="section">
+    <div class="section-header">
+      <h2 class="section-title">New & returning</h2>
+      <a href="browse.html?sort=newest" class="section-link">Browse by year →</a>
+    </div>
+    <div id="new-shows"></div>
+  </section>
+
+  <footer class="site-footer"></footer>
+
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      initHeader('home');
+
+      const popular = [...SHOWS].sort((a, b) => b.reviews - a.reviews).slice(0, 10);
+      document.getElementById('popular-shows').innerHTML = renderPosterGrid(popular);
+      document.getElementById('activity-feed').innerHTML = renderActivityFeed(ACTIVITY);
+      document.getElementById('popular-lists').innerHTML = CURATED_LISTS.slice(0, 4).map(renderListCard).join('');
+      document.getElementById('new-shows').innerHTML = renderPosterGrid(
+        [...SHOWS].sort((a, b) => b.year - a.year).slice(0, 8)
+      );
+
+      document.getElementById('hero-cta').addEventListener('click', () => {
+        if (getUser().signedIn) {
+          window.location.href = 'browse.html';
+        } else {
+          openAuthModal();
+        }
+      });
+
+      document.querySelectorAll('.list-card').forEach(card => {
+        card.style.cursor = 'pointer';
+        card.addEventListener('click', () => {
+          window.location.href = 'lists.html#list-' + card.dataset.listId;
+        });
+      });
+    });
+  </script>
+</body>
+</html>

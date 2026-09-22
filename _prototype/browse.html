@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Browse Shows — Seriesboxd</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header class="site-header"></header>
+
+  <section class="section">
+    <div class="section-header">
+      <h2 class="section-title" id="browse-heading">All TV Shows</h2>
+      <span id="result-count" style="font-size:0.875rem;color:var(--text-muted)"></span>
+    </div>
+
+    <div class="browse-toolbar">
+      <div class="filter-group" id="genre-filters">
+        <button class="filter-chip active" data-genre="all">All</button>
+      </div>
+      <select class="sort-select" id="sort-select">
+        <option value="popular">Most Popular</option>
+        <option value="rating">Highest Rated</option>
+        <option value="reviews">Most Reviewed</option>
+        <option value="newest">Newest</option>
+        <option value="oldest">Oldest</option>
+        <option value="title">A–Z</option>
+      </select>
+    </div>
+
+    <div id="show-results"></div>
+  </section>
+
+  <footer class="site-footer"></footer>
+
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      initHeader('browse');
+
+      const params = new URLSearchParams(location.search);
+      let query = params.get('q') || '';
+      let genre = params.get('genre') || 'all';
+      let sort = params.get('sort') || 'popular';
+
+      const genreContainer = document.getElementById('genre-filters');
+      GENRES.forEach(g => {
+        const btn = document.createElement('button');
+        btn.className = 'filter-chip' + (genre === g ? ' active' : '');
+        btn.dataset.genre = g;
+        btn.textContent = g;
+        genreContainer.appendChild(btn);
+      });
+
+      const sortSelect = document.getElementById('sort-select');
+      sortSelect.value = sort;
+      if (query) {
+        document.getElementById('browse-heading').textContent = `Results for "${query}"`;
+        const searchInput = document.getElementById('global-search');
+        if (searchInput) searchInput.value = query;
+      }
+
+      function render() {
+        const results = filterShows(query, genre, sort);
+        document.getElementById('result-count').textContent = `${results.length} show${results.length !== 1 ? 's' : ''}`;
+        document.getElementById('show-results').innerHTML = results.length
+          ? renderPosterGrid(results)
+          : `<div class="empty-state"><h3>No shows found</h3><p>Try a different search or filter.</p></div>`;
+      }
+
+      genreContainer.addEventListener('click', (e) => {
+        if (!e.target.classList.contains('filter-chip')) return;
+        genreContainer.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+        e.target.classList.add('active');
+        genre = e.target.dataset.genre;
+        render();
+      });
+
+      sortSelect.addEventListener('change', () => {
+        sort = sortSelect.value;
+        render();
+      });
+
+      render();
+    });
+  </script>
+</body>
+</html>
