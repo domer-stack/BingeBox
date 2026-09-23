@@ -33,7 +33,7 @@ export function ProfileEditForm({ displayName, bio, avatarId, defaultOpen = fals
         name: result.displayName ?? displayName,
       });
       setMessage({ type: "ok", text: "Profile updated." });
-      setOpen(false);
+      if (!defaultOpen) setOpen(false);
     } else {
       setMessage({ type: "err", text: result.error });
     }

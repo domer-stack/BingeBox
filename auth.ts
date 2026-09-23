@@ -49,7 +49,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       if (trigger === "update" && session) {
         const patch = session as { avatarId?: string; name?: string };
         if (patch.avatarId) token.avatarId = patch.avatarId;
-        if patch.name) token.name = patch.name;
+        if (patch.name) token.name = patch.name;
       }
       return token;
     },
