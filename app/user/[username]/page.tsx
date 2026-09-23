@@ -48,7 +48,7 @@ export default async function UserProfilePage({ params }: UserPageProps) {
         </div>
         <div className="flex gap-2">
           {isSelf ? (
-            <Link href="/profile" className="rounded border border-[var(--color-border-strong)] px-4 py-2 text-sm font-semibold text-[var(--color-muted)] hover:text-[var(--color-text)]">
+            <Link href="/profile#edit-profile" className="rounded border border-[var(--color-border-strong)] px-4 py-2 text-sm font-semibold text-[var(--color-muted)] hover:text-[var(--color-text)]">
               Edit profile
             </Link>
           ) : (

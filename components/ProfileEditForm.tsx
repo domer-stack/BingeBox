@@ -10,11 +10,13 @@ interface ProfileEditFormProps {
   displayName: string;
   bio: string;
   avatarId: string;
+  /** When true, show name/bio/avatar form immediately (e.g. on /profile). */
+  defaultOpen?: boolean;
 }
 
-export function ProfileEditForm({ displayName, bio, avatarId }: ProfileEditFormProps) {
+export function ProfileEditForm({ displayName, bio, avatarId, defaultOpen = false }: ProfileEditFormProps) {
   const { update } = useSession();
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(defaultOpen);
   const [message, setMessage] = useState<{ type: "ok" | "err"; text: string } | null>(null);
   const [pending, setPending] = useState(false);
   const [selectedAvatar, setSelectedAvatar] = useState<AvatarId>(resolveAvatarId(avatarId));
@@ -44,7 +46,7 @@ export function ProfileEditForm({ displayName, bio, avatarId }: ProfileEditFormP
           Edit profile
         </button>
       ) : (
-        <form onSubmit={onSubmit} className="glass-card mt-2 max-w-lg p-5">
+        <form id="edit-profile" onSubmit={onSubmit} className="glass-card mt-2 max-w-lg p-5">
           <h2 className="section-eyebrow mb-4">Edit profile</h2>
           <AvatarPicker value={selectedAvatar} onChange={setSelectedAvatar} />
           <label className="mt-4 block text-sm text-[var(--color-muted)]">

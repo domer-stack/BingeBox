@@ -67,6 +67,7 @@ export default async function ProfilePage() {
             displayName={user?.displayName ?? ""}
             bio={user?.bio ?? ""}
             avatarId={user?.avatarId ?? "stream-pulse"}
+            defaultOpen
           />
           <div className="mt-4 flex gap-8">
             <div>
