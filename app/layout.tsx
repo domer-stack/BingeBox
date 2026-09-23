@@ -8,6 +8,16 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "BingeBox — Your life in TV",
   description: "Track TV shows, rate episodes, build lists, and discover what to watch next.",
+  icons: {
+    icon: "/logo.png",
+    apple: "/logo.png",
+  },
+  openGraph: {
+    title: "BingeBox — Your life in TV",
+    description: "Track TV shows, rate episodes, build lists, and discover what to watch next.",
+    siteName: "BingeBox",
+    images: [{ url: "/logo.png", width: 1024, height: 1024, alt: "BingeBox logo" }],
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

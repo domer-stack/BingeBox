@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { BrandLogo } from "./BrandLogo";
 import { HeaderAuth } from "./HeaderAuth";
 import { MobileNav } from "./MobileNav";
 import { ThemeToggle } from "./ThemeToggle";
@@ -29,14 +30,7 @@ export function Header() {
   return (
     <header className="glass sticky top-0 z-50 border-b border-[var(--color-border)]">
       <div className="relative z-10 mx-auto flex h-[3.75rem] max-w-6xl items-center gap-4 px-5 lg:gap-6">
-        <Link href="/" className="group flex shrink-0 items-center gap-2.5">
-          <span className="relative flex h-8 w-8 items-center justify-center overflow-hidden rounded-lg bg-[var(--gradient-brand)] text-sm font-extrabold text-[var(--btn-primary-text)] shadow-[0_0_20px_-4px_var(--color-accent-glow)] transition group-hover:shadow-[0_0_28px_-2px_var(--color-accent-glow)]">
-            B
-          </span>
-          <span className="font-[family-name:var(--font-display)] text-lg font-bold tracking-tight text-[var(--color-text)] transition group-hover:text-[var(--color-accent-soft)]">
-            BingeBox
-          </span>
-        </Link>
+        <BrandLogo size="sm" />
 
         <nav className="hidden items-center gap-1 md:flex">
           {NAV.map(({ href, label }) => (
