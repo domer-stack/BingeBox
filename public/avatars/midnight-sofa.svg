@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Midnight Sofa avatar">
+  <defs>
+    <linearGradient id="screen" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0ea5e9"/>
+      <stop offset="100%" stop-color="#a78bfa"/>
+    </linearGradient>
+  </defs>
+  <rect width="128" height="128" rx="32" fill="#08090d"/>
+  <ellipse cx="64" cy="86" rx="38" ry="24" fill="#1e293b"/>
+  <path fill="#334155" d="M28 78 Q28 98 64 98 Q100 98 100 78 L100 72 Q64 68 28 72 Z"/>
+  <ellipse cx="64" cy="52" rx="22" ry="26" fill="#d1a88f"/>
+  <path fill="#3d2314" d="M42 48 Q64 28 86 48 Q82 38 64 34 Q46 38 42 48 Z"/>
+  <ellipse cx="56" cy="50" rx="3" ry="4" fill="#1a1510"/>
+  <ellipse cx="72" cy="50" rx="3" ry="4" fill="#1a1510"/>
+  <path stroke="#1a1510" stroke-width="2" fill="none" d="M58 60 Q64 64 70 60"/>
+  <rect x="78" y="44" width="22" height="16" rx="3" fill="url(#screen)" opacity="0.85"/>
+  <rect x="80" y="46" width="18" height="2" rx="1" fill="#fff" opacity="0.4"/>
+  <path fill="#2dd4bf" d="M34 76 Q38 70 42 76 L38 80 Z" opacity="0.6"/>
+</svg>

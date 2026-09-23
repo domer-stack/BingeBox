@@ -30,6 +30,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           name: user.displayName ?? user.username,
           email: user.email,
           username: user.username,
+          avatarId: user.avatarId,
         };
       },
     }),
@@ -39,10 +40,16 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   },
   session: { strategy: "jwt" },
   callbacks: {
-    async jwt({ token, user }) {
+    async jwt({ token, user, trigger, session }) {
       if (user) {
         token.id = user.id;
         token.username = (user as { username?: string }).username;
+        token.avatarId = (user as { avatarId?: string }).avatarId;
+      }
+      if (trigger === "update" && session) {
+        const patch = session as { avatarId?: string; name?: string };
+        if (patch.avatarId) token.avatarId = patch.avatarId;
+        if patch.name) token.name = patch.name;
       }
       return token;
     },
@@ -50,6 +57,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       if (session.user) {
         session.user.id = token.id as string;
         session.user.username = token.username as string;
+        session.user.avatarId = token.avatarId as string | undefined;
       }
       return session;
     },

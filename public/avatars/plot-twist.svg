@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Plot Twist avatar">
+  <defs>
+    <radialGradient id="screen-glow" cx="50%" cy="30%" r="60%">
+      <stop offset="0%" stop-color="#a78bfa" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#0f1117" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="128" height="128" rx="32" fill="#0f1117"/>
+  <rect width="128" height="128" rx="32" fill="url(#screen-glow)"/>
+  <ellipse cx="64" cy="86" rx="36" ry="26" fill="#4a3728"/>
+  <ellipse cx="64" cy="56" rx="25" ry="29" fill="#e0ac69"/>
+  <path fill="#2a1810" d="M38 52 Q64 24 90 52 Q84 40 64 36 Q44 40 38 52 Z"/>
+  <ellipse cx="52" cy="52" rx="5" ry="6" fill="#1a1510"/>
+  <ellipse cx="76" cy="52" rx="5" ry="6" fill="#1a1510"/>
+  <circle cx="52" cy="50" r="1.5" fill="#fff" opacity="0.7"/>
+  <circle cx="76" cy="50" r="1.5" fill="#fff" opacity="0.7"/>
+  <ellipse cx="64" cy="64" rx="6" ry="8" fill="#1a1510" opacity="0.15"/>
+  <path stroke="#1a1510" stroke-width="2" fill="none" d="M58 68 Q64 74 70 68"/>
+  <path fill="#e0ac69" d="M28 58 L38 48 L40 62 Z"/>
+  <path fill="#e0ac69" d="M100 58 L90 48 L88 62 Z"/>
+  <path fill="none" stroke="#67e8f9" stroke-width="2" stroke-linecap="round" d="M32 44 L38 38 M36 46 L42 40"/>
+  <path fill="none" stroke="#fbbf24" stroke-width="2" stroke-linecap="round" d="M96 44 L90 38 M92 46 L86 40"/>
+</svg>

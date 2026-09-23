@@ -8,6 +8,7 @@ import { getUserWatchlist } from "@/lib/actions/watchlist";
 import { ListCard } from "@/components/ListCard";
 import { prisma } from "@/lib/prisma";
 import { ProfileEditForm } from "@/components/ProfileEditForm";
+import { UserAvatar } from "@/components/UserAvatar";
 import { ShowGrid } from "@/components/ShowGrid";
 import { getShow, type TmdbShow } from "@/lib/tmdb";
 
@@ -57,14 +58,16 @@ export default async function ProfilePage() {
   return (
     <div className="page-shell py-10">
       <div className="flex flex-col items-start gap-6 sm:flex-row sm:items-center">
-        <div className="flex h-24 w-24 items-center justify-center rounded-full bg-[var(--gradient-brand)] text-3xl font-bold text-[var(--btn-primary-text)]">
-          {(user?.displayName ?? user?.username ?? "?")[0].toUpperCase()}
-        </div>
+        <UserAvatar avatarId={user?.avatarId} alt={user?.displayName ?? user?.username ?? ""} size="lg" />
         <div>
           <h1 className="text-2xl font-bold">{user?.displayName ?? user?.username}</h1>
           <p className="text-sm text-[var(--color-subtle)]">@{user?.username}</p>
           {user?.bio && <p className="mt-2 max-w-lg text-[var(--color-muted)]">{user.bio}</p>}
-          <ProfileEditForm displayName={user?.displayName ?? ""} bio={user?.bio ?? ""} />
+          <ProfileEditForm
+            displayName={user?.displayName ?? ""}
+            bio={user?.bio ?? ""}
+            avatarId={user?.avatarId ?? "stream-pulse"}
+          />
           <div className="mt-4 flex gap-8">
             <div>
               <p className="text-xl font-bold">{diary.length}</p>

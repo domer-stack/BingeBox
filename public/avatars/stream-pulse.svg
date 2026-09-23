@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Stream Pulse avatar">
+  <defs>
+    <linearGradient id="bg1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f1117"/>
+      <stop offset="100%" stop-color="#161922"/>
+    </linearGradient>
+    <linearGradient id="glow1" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#2dd4bf"/>
+      <stop offset="100%" stop-color="#a78bfa"/>
+    </linearGradient>
+  </defs>
+  <rect width="128" height="128" rx="32" fill="url(#bg1)"/>
+  <circle cx="64" cy="64" r="46" fill="url(#glow1)" opacity="0.2"/>
+  <ellipse cx="64" cy="78" rx="34" ry="28" fill="#c4a882"/>
+  <path fill="#1a1510" d="M34 62 Q64 28 94 62 Q88 48 64 44 Q40 48 34 62 Z"/>
+  <ellipse cx="64" cy="58" rx="26" ry="30" fill="#d4b896"/>
+  <ellipse cx="52" cy="56" rx="4" ry="5" fill="#1a1510"/>
+  <ellipse cx="76" cy="56" rx="4" ry="5" fill="#1a1510"/>
+  <path stroke="#1a1510" stroke-width="2" fill="none" d="M58 68 Q64 72 70 68"/>
+  <path fill="#2dd4bf" d="M38 54 Q32 48 28 58 L32 62 Q36 56 38 54"/>
+  <path fill="#67e8f9" d="M90 54 Q96 48 100 58 L96 62 Q92 56 90 54"/>
+  <rect x="30" y="52" width="12" height="18" rx="6" fill="#161922" stroke="#2dd4bf" stroke-width="1.5"/>
+  <rect x="86" y="52" width="12" height="18" rx="6" fill="#161922" stroke="#2dd4bf" stroke-width="1.5"/>
+</svg>

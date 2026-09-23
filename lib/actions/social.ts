@@ -84,7 +84,7 @@ export async function getActivityFeed(limit = 20) {
   return prisma.diaryEntry.findMany({
     where: { userId: { in: userIds }, OR: [{ review: { not: null } }, { rating: { not: null } }] },
     include: {
-      user: { select: { username: true, displayName: true } },
+      user: { select: { username: true, displayName: true, avatarId: true } },
       _count: { select: { likes: true } },
       likes: { where: { userId: session.user.id }, select: { id: true } },
     },
@@ -100,6 +100,7 @@ export async function getMembers(limit = 30) {
       username: true,
       displayName: true,
       bio: true,
+      avatarId: true,
       createdAt: true,
       _count: { select: { diaryEntries: true, followers: true, following: true } },
     },
@@ -116,6 +117,7 @@ export async function getUserByUsername(username: string) {
       username: true,
       displayName: true,
       bio: true,
+      avatarId: true,
       createdAt: true,
       _count: { select: { diaryEntries: true, followers: true, following: true, lists: true } },
     },

@@ -1,17 +1,23 @@
 "use client";
 
 import { FormEvent, useState } from "react";
+import { useSession } from "next-auth/react";
+import { AvatarPicker } from "@/components/AvatarPicker";
+import { resolveAvatarId, type AvatarId } from "@/lib/avatars";
 import { updateProfile } from "@/lib/actions/auth";
 
 interface ProfileEditFormProps {
   displayName: string;
   bio: string;
+  avatarId: string;
 }
 
-export function ProfileEditForm({ displayName, bio }: ProfileEditFormProps) {
+export function ProfileEditForm({ displayName, bio, avatarId }: ProfileEditFormProps) {
+  const { update } = useSession();
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState<{ type: "ok" | "err"; text: string } | null>(null);
   const [pending, setPending] = useState(false);
+  const [selectedAvatar, setSelectedAvatar] = useState<AvatarId>(resolveAvatarId(avatarId));
 
   async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -20,6 +26,10 @@ export function ProfileEditForm({ displayName, bio }: ProfileEditFormProps) {
     const result = await updateProfile(new FormData(e.currentTarget));
     setPending(false);
     if (result.ok) {
+      await update({
+        avatarId: result.avatarId ?? selectedAvatar,
+        name: result.displayName ?? displayName,
+      });
       setMessage({ type: "ok", text: "Profile updated." });
       setOpen(false);
     } else {
@@ -36,7 +46,8 @@ export function ProfileEditForm({ displayName, bio }: ProfileEditFormProps) {
       ) : (
         <form onSubmit={onSubmit} className="glass-card mt-2 max-w-lg p-5">
           <h2 className="section-eyebrow mb-4">Edit profile</h2>
-          <label className="block text-sm text-[var(--color-muted)]">
+          <AvatarPicker value={selectedAvatar} onChange={setSelectedAvatar} />
+          <label className="mt-4 block text-sm text-[var(--color-muted)]">
             Display name
             <input
               name="displayName"

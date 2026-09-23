@@ -1,9 +1,12 @@
 "use server";
 
 import bcrypt from "bcryptjs";
+import { isValidAvatarId } from "@/lib/avatars";
 import { prisma } from "@/lib/prisma";
 
-export type ActionResult = { ok: true } | { ok: false; error: string };
+export type ActionResult =
+  | { ok: true; avatarId?: string; displayName?: string }
+  | { ok: false; error: string };
 
 export async function registerUser(formData: FormData): Promise<ActionResult> {
   const username = (formData.get("username") as string)?.trim();
@@ -43,6 +46,8 @@ export async function updateProfile(formData: FormData): Promise<ActionResult> {
 
   const displayName = (formData.get("displayName") as string)?.trim() || null;
   const bio = (formData.get("bio") as string)?.trim() || null;
+  const avatarRaw = (formData.get("avatarId") as string)?.trim();
+  const avatarId = isValidAvatarId(avatarRaw) ? avatarRaw : undefined;
 
   if (displayName && displayName.length > 80) {
     return { ok: false, error: "Display name must be 80 characters or less." };
@@ -53,13 +58,23 @@ export async function updateProfile(formData: FormData): Promise<ActionResult> {
 
   const user = await prisma.user.update({
     where: { id: session.user.id },
-    data: { displayName, bio },
-    select: { username: true },
+    data: {
+      displayName,
+      bio,
+      ...(avatarId && { avatarId }),
+    },
+    select: { username: true, avatarId: true, displayName: true },
   });
 
   const { revalidatePath } = await import("next/cache");
   revalidatePath("/profile");
   revalidatePath(`/user/${user.username}`);
+  revalidatePath("/members");
+  revalidatePath("/");
 
-  return { ok: true };
+  return {
+    ok: true,
+    avatarId: user.avatarId,
+    displayName: user.displayName ?? undefined,
+  };
 }

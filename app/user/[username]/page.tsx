@@ -4,6 +4,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { auth } from "@/auth";
 import { FollowButton } from "@/components/FollowButton";
+import { UserAvatar } from "@/components/UserAvatar";
 import { ListCard } from "@/components/ListCard";
 import { StarRating } from "@/components/StarRating";
 import { getUserLists } from "@/lib/actions/lists";
@@ -32,9 +33,7 @@ export default async function UserProfilePage({ params }: UserPageProps) {
     <div className="mx-auto max-w-6xl px-5 py-10">
       <div className="flex flex-col gap-6 sm:flex-row sm:items-start sm:justify-between">
         <div className="flex items-start gap-4">
-          <div className="flex h-20 w-20 items-center justify-center rounded-full bg-[var(--color-accent)] text-3xl font-bold text-[var(--btn-primary-text)]">
-            {(user.displayName ?? user.username)[0].toUpperCase()}
-          </div>
+          <UserAvatar avatarId={user.avatarId} alt={user.displayName ?? user.username} size="md" />
           <div>
             <h1 className="text-2xl font-bold">{user.displayName ?? user.username}</h1>
             <p className="text-sm text-[var(--color-subtle)]">@{user.username}</p>

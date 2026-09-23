@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { signOut, useSession } from "next-auth/react";
+import { UserAvatar } from "./UserAvatar";
 
 export function HeaderAuth() {
   const { data: session, status } = useSession();
@@ -17,9 +18,11 @@ export function HeaderAuth() {
           href="/profile"
           className="flex max-w-[120px] items-center gap-2 truncate rounded-lg px-2 py-1.5 text-sm font-medium text-[var(--color-muted)] transition hover:bg-white/5 hover:text-[var(--color-text)]"
         >
-          <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[var(--gradient-brand)] text-xs font-bold text-[var(--btn-primary-text)]">
-            {(session.user.name ?? session.user.username ?? "?")[0].toUpperCase()}
-          </span>
+          <UserAvatar
+            avatarId={session.user.avatarId}
+            alt={session.user.name ?? session.user.username ?? ""}
+            size="xs"
+          />
           <span className="hidden truncate sm:inline">{session.user.name ?? session.user.username}</span>
         </Link>
         <button type="button" onClick={() => signOut({ callbackUrl: "/" })} className="btn-ghost">

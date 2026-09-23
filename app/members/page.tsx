@@ -1,6 +1,7 @@
 export const dynamic = "force-dynamic";
 
 import Link from "next/link";
+import { UserAvatar } from "@/components/UserAvatar";
 import { getMembers } from "@/lib/actions/social";
 
 export default async function MembersPage() {
@@ -21,9 +22,7 @@ export default async function MembersPage() {
               href={`/user/${member.username}`}
               className="flex items-center gap-4 py-4 transition hover:bg-[var(--color-elevated)]/50"
             >
-              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[var(--color-accent)] text-lg font-bold text-[var(--btn-primary-text)]">
-                {(member.displayName ?? member.username)[0].toUpperCase()}
-              </div>
+              <UserAvatar avatarId={member.avatarId} alt={member.displayName ?? member.username} size="sm" />
               <div className="min-w-0 flex-1">
                 <p className="font-semibold">{member.displayName ?? member.username}</p>
                 <p className="text-sm text-[var(--color-subtle)]">@{member.username}</p>

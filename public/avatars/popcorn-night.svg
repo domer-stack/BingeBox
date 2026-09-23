@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Popcorn Night avatar">
+  <rect width="128" height="128" rx="32" fill="#0f1117"/>
+  <ellipse cx="64" cy="82" rx="36" ry="28" fill="#5c3d2e"/>
+  <path fill="#2a1810" d="M36 58 Q64 24 92 58 Q86 42 64 38 Q42 42 36 58 Z"/>
+  <ellipse cx="64" cy="56" rx="27" ry="31" fill="#e8b796"/>
+  <ellipse cx="52" cy="54" rx="4" ry="5" fill="#1a1510"/>
+  <ellipse cx="76" cy="54" rx="4" ry="5" fill="#1a1510"/>
+  <path stroke="#1a1510" stroke-width="2" fill="none" d="M56 66 Q64 72 72 66"/>
+  <ellipse cx="58" cy="62" rx="5" ry="3" fill="#f472b6" opacity="0.25"/>
+  <ellipse cx="70" cy="62" rx="5" ry="3" fill="#f472b6" opacity="0.25"/>
+  <path fill="#fbbf24" d="M48 88 Q52 78 58 82 Q64 76 70 82 Q76 78 80 88 L48 88"/>
+  <ellipse cx="54" cy="80" rx="5" ry="4" fill="#fcd34d"/>
+  <ellipse cx="64" cy="76" rx="6" ry="5" fill="#fde68a"/>
+  <ellipse cx="74" cy="80" rx="5" ry="4" fill="#f59e0b"/>
+</svg>

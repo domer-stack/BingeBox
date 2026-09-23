@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { StarRating } from "./StarRating";
+import { UserAvatar } from "./UserAvatar";
 import { LikeButton } from "./LikeButton";
 import { posterUrl, getShow } from "@/lib/tmdb";
 
@@ -14,7 +15,7 @@ type ActivityEntry = {
   rating: number | null;
   review: string | null;
   watchedAt: Date;
-  user: { username: string; displayName: string | null };
+  user: { username: string; displayName: string | null; avatarId: string };
   _count: { likes: number };
   likes: { id: string }[];
 };
@@ -50,11 +51,8 @@ export async function ActivityFeed({ entries }: { entries: ActivityEntry[] }) {
         const displayName = entry.user.displayName ?? entry.user.username;
         return (
           <article key={entry.id} className="feed-row grid grid-cols-[48px_56px_1fr] gap-4 px-1">
-            <Link
-              href={`/user/${entry.user.username}`}
-              className="flex h-11 w-11 items-center justify-center rounded-full bg-[var(--gradient-brand)] text-sm font-bold text-[var(--btn-primary-text)] shadow-[0_0_16px_-4px_var(--color-accent-glow)]"
-            >
-              {displayName[0].toUpperCase()}
+            <Link href={`/user/${entry.user.username}`}>
+              <UserAvatar avatarId={entry.user.avatarId} alt={displayName} size="sm" className="!h-11 !w-11" />
             </Link>
             <Link
               href={`/show/${entry.tmdbShowId}`}
