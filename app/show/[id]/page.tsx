@@ -59,7 +59,7 @@ export default async function ShowPage({ params }: ShowPageProps) {
             {poster ? (
               <Image src={poster} alt={show.name} fill className="object-cover" sizes="200px" />
             ) : (
-              <div className="flex h-full items-center justify-center bg-[#2c3440] p-4 text-center text-sm text-[#678]">
+              <div className="flex h-full items-center justify-center bg-[var(--color-overlay)] p-4 text-center text-sm text-[var(--color-subtle)]">
                 {show.name}
               </div>
             )}
@@ -67,7 +67,7 @@ export default async function ShowPage({ params }: ShowPageProps) {
 
           <div>
             <h1 className="text-3xl font-bold tracking-tight md:text-4xl">{show.name}</h1>
-            <div className="mt-2 flex flex-wrap gap-x-4 text-sm text-[#678]">
+            <div className="mt-2 flex flex-wrap gap-x-4 text-sm text-[var(--color-subtle)]">
               <span>{showYearRange(show.first_air_date, show.last_air_date, show.in_production)}</span>
               <span>{show.number_of_seasons} seasons · {show.number_of_episodes} episodes</span>
               <span>{show.status}</span>
@@ -77,7 +77,7 @@ export default async function ShowPage({ params }: ShowPageProps) {
                 <Link
                   key={g.id}
                   href={`/browse?genre=${g.id}`}
-                  className="rounded-full bg-[#2c3440] px-2.5 py-0.5 text-xs text-[#9ab] hover:text-white"
+                  className="rounded-full bg-[var(--color-overlay)] px-2.5 py-0.5 text-xs text-[var(--color-muted)] hover:text-[var(--color-text)]"
                 >
                   {g.name}
                 </Link>
@@ -86,7 +86,7 @@ export default async function ShowPage({ params }: ShowPageProps) {
 
             <div className="mt-4 flex items-center gap-3">
               <StarRating rating={rating} size="lg" showValue />
-              <span className="text-sm text-[#678]">{show.vote_count.toLocaleString()} ratings on TMDb</span>
+              <span className="text-sm text-[var(--color-subtle)]">{show.vote_count.toLocaleString()} ratings on TMDb</span>
             </div>
 
             <div className="mt-5 flex flex-wrap gap-2">
@@ -98,36 +98,36 @@ export default async function ShowPage({ params }: ShowPageProps) {
               <AddToListButton tmdbShowId={showId} showName={show.name} />
               <Link
                 href={`/show/${showId}/season/${firstSeason}`}
-                className="rounded border border-[#456] px-4 py-2 text-sm font-semibold text-[#9ab] hover:text-white"
+                className="rounded border border-[var(--color-border-strong)] px-4 py-2 text-sm font-semibold text-[var(--color-muted)] hover:text-[var(--color-text)]"
               >
                 Log episodes
               </Link>
             </div>
 
-            {show.tagline && <p className="mt-4 text-sm italic text-[#9ab]">{show.tagline}</p>}
-            <p className="mt-4 max-w-2xl text-[#9ab] leading-relaxed">{show.overview || "No overview available."}</p>
+            {show.tagline && <p className="mt-4 text-sm italic text-[var(--color-muted)]">{show.tagline}</p>}
+            <p className="mt-4 max-w-2xl text-[var(--color-muted)] leading-relaxed">{show.overview || "No overview available."}</p>
 
             {show.created_by.length > 0 && (
-              <p className="mt-4 text-sm text-[#678]">
+              <p className="mt-4 text-sm text-[var(--color-subtle)]">
                 Created by{" "}
-                <span className="text-[#9ab]">{show.created_by.map((c) => c.name).join(", ")}</span>
+                <span className="text-[var(--color-muted)]">{show.created_by.map((c) => c.name).join(", ")}</span>
               </p>
             )}
 
             {show.networks.length > 0 && (
-              <p className="mt-1 text-sm text-[#678]">
-                Network: <span className="text-[#9ab]">{show.networks.map((n) => n.name).join(", ")}</span>
+              <p className="mt-1 text-sm text-[var(--color-subtle)]">
+                Network: <span className="text-[var(--color-muted)]">{show.networks.map((n) => n.name).join(", ")}</span>
               </p>
             )}
 
             {providers.length > 0 && (
               <div className="mt-6">
-                <h3 className="text-xs font-semibold uppercase tracking-widest text-[#678]">Stream on</h3>
+                <h3 className="text-xs font-semibold uppercase tracking-widest text-[var(--color-subtle)]">Stream on</h3>
                 <div className="mt-2 flex flex-wrap gap-2">
                   {providers.map((p) => (
                     <span
                       key={p.provider_id}
-                      className="rounded bg-[#2c3440] px-3 py-1.5 text-sm text-[#9ab]"
+                      className="rounded bg-[var(--color-overlay)] px-3 py-1.5 text-sm text-[var(--color-muted)]"
                     >
                       {p.provider_name}
                     </span>
@@ -138,8 +138,8 @@ export default async function ShowPage({ params }: ShowPageProps) {
 
             {credits?.cast && credits.cast.length > 0 && (
               <div className="mt-6">
-                <h3 className="text-xs font-semibold uppercase tracking-widest text-[#678]">Cast</h3>
-                <p className="mt-2 text-sm text-[#9ab]">
+                <h3 className="text-xs font-semibold uppercase tracking-widest text-[var(--color-subtle)]">Cast</h3>
+                <p className="mt-2 text-sm text-[var(--color-muted)]">
                   {credits.cast.slice(0, 8).map((c) => c.name).join(", ")}
                 </p>
               </div>
@@ -149,7 +149,7 @@ export default async function ShowPage({ params }: ShowPageProps) {
       </section>
 
       <section className="mx-auto max-w-6xl px-5 py-10">
-        <h2 className="mb-5 text-xs font-semibold uppercase tracking-widest text-[#678]">Seasons</h2>
+        <h2 className="mb-5 text-xs font-semibold uppercase tracking-widest text-[var(--color-subtle)]">Seasons</h2>
         <div className="space-y-2">
           {show.seasons
             .filter((s) => s.season_number > 0)
@@ -157,9 +157,9 @@ export default async function ShowPage({ params }: ShowPageProps) {
               <Link
                 key={season.id}
                 href={`/show/${show.id}/season/${season.season_number}`}
-                className="flex items-center gap-4 rounded border border-[#2c3440] bg-[#1c2228] p-4 transition hover:border-[#456]"
+                className="flex items-center gap-4 rounded border border-[var(--color-border)] bg-[var(--color-elevated)] p-4 transition hover:border-[var(--color-border-strong)]"
               >
-                <div className="relative h-16 w-12 shrink-0 overflow-hidden rounded bg-[#2c3440]">
+                <div className="relative h-16 w-12 shrink-0 overflow-hidden rounded bg-[var(--color-overlay)]">
                   {season.poster_path && (
                     <Image
                       src={posterUrl(season.poster_path, "w154")!}
@@ -172,12 +172,12 @@ export default async function ShowPage({ params }: ShowPageProps) {
                 </div>
                 <div className="min-w-0 flex-1">
                   <p className="font-semibold">{season.name}</p>
-                  <p className="text-sm text-[#678]">
+                  <p className="text-sm text-[var(--color-subtle)]">
                     {season.episode_count} episodes
                     {season.air_date && ` · ${formatDate(season.air_date)}`}
                   </p>
                 </div>
-                <span className="text-[#678]">→</span>
+                <span className="text-[var(--color-subtle)]">→</span>
               </Link>
             ))}
         </div>
@@ -185,7 +185,7 @@ export default async function ShowPage({ params }: ShowPageProps) {
 
       {similar.length > 0 && (
         <section className="mx-auto max-w-6xl px-5 py-10">
-          <h2 className="mb-5 text-xs font-semibold uppercase tracking-widest text-[#678]">Similar shows</h2>
+          <h2 className="mb-5 text-xs font-semibold uppercase tracking-widest text-[var(--color-subtle)]">Similar shows</h2>
           <ShowGrid shows={similar} />
         </section>
       )}

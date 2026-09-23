@@ -39,7 +39,7 @@ export function RegisterForm() {
   return (
     <form onSubmit={onSubmit} className="mx-auto max-w-sm space-y-4">
       <div>
-        <label className="block text-sm text-[#9ab]">Username</label>
+        <label className="block text-sm text-[var(--color-muted)]">Username</label>
         <input
           name="username"
           required
@@ -49,7 +49,7 @@ export function RegisterForm() {
         />
       </div>
       <div>
-        <label className="block text-sm text-[#9ab]">Display name (optional)</label>
+        <label className="block text-sm text-[var(--color-muted)]">Display name (optional)</label>
         <input
           name="displayName"
           autoComplete="name"
@@ -57,7 +57,7 @@ export function RegisterForm() {
         />
       </div>
       <div>
-        <label className="block text-sm text-[#9ab]">Email</label>
+        <label className="block text-sm text-[var(--color-muted)]">Email</label>
         <input
           name="email"
           type="email"
@@ -67,7 +67,7 @@ export function RegisterForm() {
         />
       </div>
       <div>
-        <label className="block text-sm text-[#9ab]">Password</label>
+        <label className="block text-sm text-[var(--color-muted)]">Password</label>
         <input
           name="password"
           type="password"
@@ -85,9 +85,9 @@ export function RegisterForm() {
       >
         {loading ? "Creating account…" : "Create account"}
       </button>
-      <p className="text-center text-sm text-[#678]">
+      <p className="text-center text-sm text-[var(--color-subtle)]">
         Already have an account?{" "}
-        <Link href="/login" className="text-[#40bcf4] hover:text-white">
+        <Link href="/login" className="text-[var(--color-link)] hover:text-[var(--color-text)]">
           Sign in
         </Link>
       </p>

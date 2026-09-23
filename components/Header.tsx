@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { HeaderAuth } from "./HeaderAuth";
+import { MobileNav } from "./MobileNav";
 import { ThemeToggle } from "./ThemeToggle";
 import { usePathname, useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
@@ -65,6 +66,7 @@ export function Header() {
           />
         </form>
 
+        <MobileNav />
         <ThemeToggle />
         <HeaderAuth />
       </div>

@@ -55,11 +55,11 @@ export function AddToListButton({ tmdbShowId, showName }: AddToListButtonProps) 
         + Add to list
       </button>
       {open && (
-        <div className="absolute left-0 top-full z-20 mt-1 min-w-[200px] rounded border border-[#2c3440] bg-[#1c2228] py-2 shadow-xl">
+        <div className="absolute left-0 top-full z-20 mt-1 min-w-[200px] rounded border border-[var(--color-border)] bg-[var(--color-elevated)] py-2 shadow-xl">
           {lists.length === 0 ? (
-            <p className="px-3 py-2 text-sm text-[#678]">
+            <p className="px-3 py-2 text-sm text-[var(--color-subtle)]">
               No lists yet.{" "}
-              <Link href="/lists/new" className="text-[#40bcf4]">
+              <Link href="/lists/new" className="text-[var(--color-link)]">
                 Create one
               </Link>
             </p>
@@ -72,7 +72,7 @@ export function AddToListButton({ tmdbShowId, showName }: AddToListButtonProps) 
                   type="button"
                   disabled={pending || inList}
                   onClick={() => handleAdd(list.id)}
-                  className="block w-full px-3 py-2 text-left text-sm text-[#9ab] hover:bg-[#2c3440] hover:text-white disabled:opacity-50"
+                  className="block w-full px-3 py-2 text-left text-sm text-[var(--color-muted)] hover:bg-[var(--color-overlay)] hover:text-[var(--color-text)] disabled:opacity-50"
                 >
                   {inList ? "✓ " : ""}{list.title}
                 </button>
@@ -81,7 +81,7 @@ export function AddToListButton({ tmdbShowId, showName }: AddToListButtonProps) 
           )}
           <Link
             href="/lists/new"
-            className="block border-t border-[#2c3440] px-3 py-2 text-sm text-[#00e054] hover:text-white"
+            className="block border-t border-[var(--color-border)] px-3 py-2 text-sm text-[var(--color-accent)] hover:text-[var(--color-text)]"
           >
             + New list
           </Link>

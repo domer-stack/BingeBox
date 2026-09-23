@@ -35,3 +35,31 @@ export async function registerUser(formData: FormData): Promise<ActionResult> {
 
   return { ok: true };
 }
+
+export async function updateProfile(formData: FormData): Promise<ActionResult> {
+  const { auth } = await import("@/auth");
+  const session = await auth();
+  if (!session?.user?.id) return { ok: false, error: "Sign in required." };
+
+  const displayName = (formData.get("displayName") as string)?.trim() || null;
+  const bio = (formData.get("bio") as string)?.trim() || null;
+
+  if (displayName && displayName.length > 80) {
+    return { ok: false, error: "Display name must be 80 characters or less." };
+  }
+  if (bio && bio.length > 280) {
+    return { ok: false, error: "Bio must be 280 characters or less." };
+  }
+
+  const user = await prisma.user.update({
+    where: { id: session.user.id },
+    data: { displayName, bio },
+    select: { username: true },
+  });
+
+  const { revalidatePath } = await import("next/cache");
+  revalidatePath("/profile");
+  revalidatePath(`/user/${user.username}`);
+
+  return { ok: true };
+}

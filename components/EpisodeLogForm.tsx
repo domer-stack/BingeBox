@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { FormEvent, useState, useTransition } from "react";
 import Link from "next/link";
-import { logEpisode } from "@/lib/actions/diary";
+import { deleteDiaryEntry, logEpisode } from "@/lib/actions/diary";
 import { StarRating } from "./StarRating";
 
 interface EpisodeLogFormProps {
@@ -14,6 +14,7 @@ interface EpisodeLogFormProps {
   episodeNumber: number;
   episodeName: string;
   existing?: {
+    id: string;
     rating: number | null;
     review: string | null;
     watchedAt: Date;
@@ -42,12 +43,12 @@ export function EpisodeLogForm({
 
   if (!session) {
     return (
-      <div className="rounded border border-[#2c3440] bg-[#1c2228] p-6">
-        <h2 className="text-xs font-semibold uppercase tracking-widest text-[#678]">Your diary entry</h2>
-        <p className="mt-3 text-sm text-[#678]">
+      <div className="rounded border border-[var(--color-border)] bg-[var(--color-elevated)] p-6">
+        <h2 className="text-xs font-semibold uppercase tracking-widest text-[var(--color-subtle)]">Your diary entry</h2>
+        <p className="mt-3 text-sm text-[var(--color-subtle)]">
           Sign in to log when you watched this episode, add your rating, and write a review.
         </p>
-        <Link href="/login" className="mt-4 inline-block text-sm font-semibold text-[#00e054] hover:text-white">
+        <Link href="/login" className="mt-4 inline-block text-sm font-semibold text-[var(--color-accent)] hover:text-[var(--color-text)]">
           Sign in →
         </Link>
       </div>
@@ -78,23 +79,23 @@ export function EpisodeLogForm({
   }
 
   return (
-    <form onSubmit={onSubmit} className="rounded border border-[#2c3440] bg-[#1c2228] p-6">
-      <h2 className="text-xs font-semibold uppercase tracking-widest text-[#678]">
+    <form onSubmit={onSubmit} className="rounded border border-[var(--color-border)] bg-[var(--color-elevated)] p-6">
+      <h2 className="text-xs font-semibold uppercase tracking-widest text-[var(--color-subtle)]">
         {existing ? "Your diary entry" : "Log this episode"}
       </h2>
 
       <div className="mt-4">
-        <label className="block text-sm text-[#9ab]">Watched on</label>
+        <label className="block text-sm text-[var(--color-muted)]">Watched on</label>
         <input
           type="date"
           value={watchedAt}
           onChange={(e) => setWatchedAt(e.target.value)}
-          className="mt-1 w-full max-w-xs rounded border border-[#2c3440] bg-[#14181c] px-3 py-2 text-sm text-white outline-none focus:border-[#00e054]"
+          className="mt-1 w-full max-w-xs rounded border border-[var(--color-border)] bg-[var(--color-base)] px-3 py-2 text-sm text-[var(--color-text)] outline-none focus:border-[var(--color-accent)]"
         />
       </div>
 
       <div className="mt-4">
-        <label className="block text-sm text-[#9ab]">Your rating</label>
+        <label className="block text-sm text-[var(--color-muted)]">Your rating</label>
         <div className="mt-2 flex flex-wrap gap-1">
           {[0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5].map((v) => (
             <button
@@ -103,8 +104,8 @@ export function EpisodeLogForm({
               onClick={() => setRating(v === rating ? null : v)}
               className={`rounded px-2 py-1 text-sm ${
                 rating === v
-                  ? "bg-[#00e054] font-semibold text-[#14181c]"
-                  : "bg-[#2c3440] text-[#9ab] hover:text-white"
+                  ? "bg-[var(--color-accent)] font-semibold text-[var(--btn-primary-text)]"
+                  : "bg-[var(--color-overlay)] text-[var(--color-muted)] hover:text-[var(--color-text)]"
               }`}
             >
               {v}★
@@ -115,29 +116,54 @@ export function EpisodeLogForm({
       </div>
 
       <div className="mt-4">
-        <label className="block text-sm text-[#9ab]">Review (optional)</label>
+        <label className="block text-sm text-[var(--color-muted)]">Review (optional)</label>
         <textarea
           value={review}
           onChange={(e) => setReview(e.target.value)}
           rows={4}
           placeholder="What did you think of this episode?"
-          className="mt-1 w-full rounded border border-[#2c3440] bg-[#14181c] px-3 py-2 text-sm text-white outline-none focus:border-[#00e054]"
+          className="mt-1 w-full rounded border border-[var(--color-border)] bg-[var(--color-base)] px-3 py-2 text-sm text-[var(--color-text)] outline-none focus:border-[var(--color-accent)]"
         />
       </div>
 
       {message && (
-        <p className={`mt-3 text-sm ${message.type === "ok" ? "text-[#00e054]" : "text-red-400"}`}>
+        <p className={`mt-3 text-sm ${message.type === "ok" ? "text-[var(--color-accent)]" : "text-red-400"}`}>
           {message.text}
         </p>
       )}
 
-      <button
-        type="submit"
-        disabled={pending}
-        className="mt-4 rounded bg-[#00e054] px-5 py-2 text-sm font-semibold text-[#14181c] hover:bg-[#00c949] disabled:opacity-50"
-      >
-        {pending ? "Saving…" : existing ? "Update entry" : "Log episode"}
-      </button>
+      <div className="mt-4 flex flex-wrap items-center gap-3">
+        <button
+          type="submit"
+          disabled={pending}
+          className="btn-primary text-sm disabled:opacity-50"
+        >
+          {pending ? "Saving…" : existing ? "Update entry" : "Log episode"}
+        </button>
+        {existing && (
+          <button
+            type="button"
+            disabled={pending}
+            onClick={() => {
+              if (!confirm("Remove this diary entry?")) return;
+              startTransition(async () => {
+                const result = await deleteDiaryEntry(existing.id);
+                if (result.ok) {
+                  setRating(null);
+                  setReview("");
+                  setMessage({ type: "ok", text: "Entry removed." });
+                  router.refresh();
+                } else {
+                  setMessage({ type: "err", text: result.error });
+                }
+              });
+            }}
+            className="text-sm text-red-400 hover:text-red-300 disabled:opacity-50"
+          >
+            Remove entry
+          </button>
+        )}
+      </div>
     </form>
   );
 }

@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { auth } from "@/auth";
 import { StarRating } from "@/components/StarRating";
+import { DeleteDiaryButton } from "@/components/DeleteDiaryButton";
 import { getUserDiary } from "@/lib/actions/diary";
 import { formatDate } from "@/lib/utils";
 import { posterUrl } from "@/lib/tmdb";
@@ -17,10 +18,10 @@ export default async function DiaryPage() {
     return (
       <div className="mx-auto max-w-6xl px-5 py-16 text-center">
         <h1 className="text-2xl font-bold">Your Diary</h1>
-        <p className="mx-auto mt-3 max-w-md text-[#9ab]">
+        <p className="mx-auto mt-3 max-w-md text-[var(--color-muted)]">
           Log every episode you watch, in order — your personal TV diary.
         </p>
-        <Link href="/login" className="mt-6 inline-block rounded bg-[#00e054] px-5 py-2.5 text-sm font-semibold text-[#14181c]">
+        <Link href="/login" className="mt-6 inline-block rounded bg-[var(--color-accent)] px-5 py-2.5 text-sm font-semibold text-[var(--btn-primary-text)]">
           Sign in to start
         </Link>
       </div>
@@ -42,18 +43,18 @@ export default async function DiaryPage() {
   return (
     <div className="mx-auto max-w-6xl px-5 py-10">
       <h1 className="text-2xl font-bold">Your Diary</h1>
-      <p className="mt-1 text-sm text-[#678]">{entries.length} episodes logged</p>
+      <p className="mt-1 text-sm text-[var(--color-subtle)]">{entries.length} episodes logged</p>
 
       {entries.length === 0 ? (
-        <div className="py-16 text-center text-[#678]">
-          <p className="text-lg text-[#9ab]">No entries yet</p>
+        <div className="py-16 text-center text-[var(--color-subtle)]">
+          <p className="text-lg text-[var(--color-muted)]">No entries yet</p>
           <p className="mt-2 text-sm">Find a show and log your first episode.</p>
-          <Link href="/browse" className="mt-6 inline-block text-[#00e054] hover:text-white">
+          <Link href="/browse" className="mt-6 inline-block text-[var(--color-accent)] hover:text-[var(--color-text)]">
             Browse shows →
           </Link>
         </div>
       ) : (
-        <div className="mt-8 divide-y divide-[#2c3440]">
+        <div className="mt-8 divide-y divide-[var(--color-border)]">
           {entries.map((entry) => {
             const poster = posterCache.get(entry.tmdbShowId);
             const d = new Date(entry.watchedAt);
@@ -62,13 +63,13 @@ export default async function DiaryPage() {
                 key={entry.id}
                 className="grid grid-cols-[72px_56px_1fr_auto] items-center gap-4 py-4 sm:grid-cols-[80px_60px_1fr_auto]"
               >
-                <div className="text-right text-sm text-[#678]">
-                  <span className="block text-xl font-bold text-white">{d.getDate()}</span>
+                <div className="text-right text-sm text-[var(--color-subtle)]">
+                  <span className="block text-xl font-bold text-[var(--color-text)]">{d.getDate()}</span>
                   {d.toLocaleDateString("en-US", { month: "short", year: "numeric" })}
                 </div>
                 <Link
                   href={`/show/${entry.tmdbShowId}`}
-                  className="relative aspect-[2/3] overflow-hidden rounded bg-[#2c3440]"
+                  className="relative aspect-[2/3] overflow-hidden rounded bg-[var(--color-overlay)]"
                 >
                   {poster && (
                     <Image src={poster} alt="" fill className="object-cover" sizes="60px" />
@@ -77,19 +78,22 @@ export default async function DiaryPage() {
                 <div className="min-w-0">
                   <Link
                     href={`/show/${entry.tmdbShowId}/season/${entry.seasonNumber}/episode/${entry.episodeNumber}`}
-                    className="font-semibold text-[#40bcf4] hover:text-white"
+                    className="font-semibold text-[var(--color-link)] hover:text-[var(--color-text)]"
                   >
                     {entry.showName}
                   </Link>
-                  <p className="text-sm text-[#9ab]">
+                  <p className="text-sm text-[var(--color-muted)]">
                     S{entry.seasonNumber}E{entry.episodeNumber}
                     {entry.episodeName && ` · ${entry.episodeName}`}
                   </p>
                   {entry.review && (
-                    <p className="mt-1 line-clamp-2 text-sm text-[#678]">{entry.review}</p>
+                    <p className="mt-1 line-clamp-2 text-sm text-[var(--color-subtle)]">{entry.review}</p>
                   )}
                 </div>
-                <div>{entry.rating && <StarRating rating={entry.rating} size="sm" />}</div>
+                <div className="flex flex-col items-end gap-2">
+                  {entry.rating && <StarRating rating={entry.rating} size="sm" />}
+                  <DeleteDiaryButton entryId={entry.id} />
+                </div>
               </div>
             );
           })}

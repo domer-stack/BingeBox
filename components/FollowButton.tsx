@@ -22,7 +22,7 @@ export function FollowButton({ targetUserId, initialFollowing, isSelf }: FollowB
 
   if (!session) {
     return (
-      <Link href="/login" className="rounded bg-[#00e054] px-4 py-2 text-sm font-semibold text-[#14181c]">
+      <Link href="/login" className="rounded bg-[var(--color-accent)] px-4 py-2 text-sm font-semibold text-[var(--btn-primary-text)]">
         Sign in to follow
       </Link>
     );
@@ -45,8 +45,8 @@ export function FollowButton({ targetUserId, initialFollowing, isSelf }: FollowB
       disabled={pending}
       className={`rounded px-4 py-2 text-sm font-semibold disabled:opacity-50 ${
         following
-          ? "border border-[#456] text-[#9ab] hover:text-white"
-          : "bg-[#00e054] text-[#14181c] hover:bg-[#00c949]"
+          ? "border border-[var(--color-border-strong)] text-[var(--color-muted)] hover:text-[var(--color-text)]"
+          : "bg-[var(--color-accent)] text-[var(--btn-primary-text)] hover:brightness-110"
       }`}
     >
       {pending ? "…" : following ? "Following" : "Follow"}

@@ -36,14 +36,14 @@ export default async function EpisodePage({ params }: EpisodePageProps) {
 
   return (
     <div className="mx-auto max-w-6xl px-5 py-10">
-      <nav className="text-sm text-[#678]">
-        <Link href={`/show/${show.id}`} className="hover:text-white">{show.name}</Link>
+      <nav className="text-sm text-[var(--color-subtle)]">
+        <Link href={`/show/${show.id}`} className="hover:text-[var(--color-text)]">{show.name}</Link>
         <span className="mx-2">/</span>
-        <Link href={`/show/${show.id}/season/${seasonNumber}`} className="hover:text-white">
+        <Link href={`/show/${show.id}/season/${seasonNumber}`} className="hover:text-[var(--color-text)]">
           Season {seasonNumber}
         </Link>
         <span className="mx-2">/</span>
-        <span className="text-[#9ab]">Episode {episodeNumber}</span>
+        <span className="text-[var(--color-muted)]">Episode {episodeNumber}</span>
       </nav>
 
       <div className="mt-6 grid gap-8 md:grid-cols-[1fr_320px]">
@@ -51,7 +51,7 @@ export default async function EpisodePage({ params }: EpisodePageProps) {
           <h1 className="text-2xl font-bold">
             {episodeNumber}. {episode.name}
           </h1>
-          <div className="mt-2 flex flex-wrap items-center gap-4 text-sm text-[#678]">
+          <div className="mt-2 flex flex-wrap items-center gap-4 text-sm text-[var(--color-subtle)]">
             {episode.air_date && <span>Aired {formatDate(episode.air_date)}</span>}
             {episode.runtime && <span>{episode.runtime} min</span>}
             {episode.vote_average > 0 && (
@@ -61,7 +61,7 @@ export default async function EpisodePage({ params }: EpisodePageProps) {
             )}
           </div>
 
-          <p className="mt-6 leading-relaxed text-[#9ab]">
+          <p className="mt-6 leading-relaxed text-[var(--color-muted)]">
             {episode.overview || "No overview available for this episode."}
           </p>
 
@@ -75,6 +75,7 @@ export default async function EpisodePage({ params }: EpisodePageProps) {
               existing={
                 diaryEntry
                   ? {
+                      id: diaryEntry.id,
                       rating: diaryEntry.rating,
                       review: diaryEntry.review,
                       watchedAt: diaryEntry.watchedAt,
@@ -86,7 +87,7 @@ export default async function EpisodePage({ params }: EpisodePageProps) {
         </div>
 
         {still && (
-          <div className="relative aspect-video overflow-hidden rounded bg-[#2c3440] shadow-lg">
+          <div className="relative aspect-video overflow-hidden rounded bg-[var(--color-overlay)] shadow-lg">
             <Image src={still} alt={episode.name} fill className="object-cover" sizes="320px" />
           </div>
         )}

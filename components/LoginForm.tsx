@@ -60,7 +60,7 @@ export function LoginForm() {
       </button>
       <p className="text-center text-sm text-[var(--color-subtle)]">
         No account?{" "}
-        <Link href="/register" className="text-[#40bcf4] hover:text-white">
+        <Link href="/register" className="text-[var(--color-link)] hover:text-[var(--color-text)]">
           Create one
         </Link>
       </p>

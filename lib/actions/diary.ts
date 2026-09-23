@@ -64,6 +64,7 @@ export async function logEpisode(data: {
   revalidatePath("/diary");
   revalidatePath("/profile");
   revalidatePath(`/show/${data.tmdbShowId}`);
+  revalidatePath(`/show/${data.tmdbShowId}/season/${data.seasonNumber}`);
   revalidatePath(
     `/show/${data.tmdbShowId}/season/${data.seasonNumber}/episode/${data.episodeNumber}`
   );
@@ -83,7 +84,26 @@ export async function deleteDiaryEntry(entryId: string): Promise<ActionResult> {
   await prisma.diaryEntry.delete({ where: { id: entryId } });
   revalidatePath("/diary");
   revalidatePath("/profile");
+  revalidatePath(`/show/${entry.tmdbShowId}`);
+  revalidatePath(`/show/${entry.tmdbShowId}/season/${entry.seasonNumber}`);
+  revalidatePath(
+    `/show/${entry.tmdbShowId}/season/${entry.seasonNumber}/episode/${entry.episodeNumber}`
+  );
   return { ok: true };
+}
+
+export async function getSeasonDiaryMap(tmdbShowId: number, seasonNumber: number) {
+  const userId = await requireUserId();
+  if (!userId) return {} as Record<number, { rating: number | null }>;
+
+  const entries = await prisma.diaryEntry.findMany({
+    where: { userId, tmdbShowId, seasonNumber },
+    select: { episodeNumber: true, rating: true },
+  });
+
+  return Object.fromEntries(
+    entries.map((e) => [e.episodeNumber, { rating: e.rating }])
+  ) as Record<number, { rating: number | null }>;
 }
 
 export async function getUserDiary(userId?: string) {

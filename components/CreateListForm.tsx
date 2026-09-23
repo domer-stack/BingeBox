@@ -27,7 +27,7 @@ export function CreateListForm() {
   return (
     <form onSubmit={onSubmit} className="mx-auto max-w-md space-y-4">
       <div>
-        <label className="block text-sm text-[#9ab]">List title</label>
+        <label className="block text-sm text-[var(--color-muted)]">List title</label>
         <input
           name="title"
           required
@@ -37,7 +37,7 @@ export function CreateListForm() {
         />
       </div>
       <div>
-        <label className="block text-sm text-[#9ab]">Description (optional)</label>
+        <label className="block text-sm text-[var(--color-muted)]">Description (optional)</label>
         <textarea
           name="description"
           rows={3}
@@ -45,8 +45,8 @@ export function CreateListForm() {
           className="glass-input mt-1 w-full px-3 py-2"
         />
       </div>
-      <label className="flex items-center gap-2 text-sm text-[#9ab]">
-        <input type="checkbox" name="isPublic" value="true" defaultChecked className="accent-[#00e054]" />
+      <label className="flex items-center gap-2 text-sm text-[var(--color-muted)]">
+        <input type="checkbox" name="isPublic" value="true" defaultChecked className="accent-[var(--color-accent)]" />
         Public list (visible to everyone)
       </label>
       {error && <p className="text-sm text-red-400">{error}</p>}

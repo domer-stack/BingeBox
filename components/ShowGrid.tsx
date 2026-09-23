@@ -9,8 +9,8 @@ interface ShowGridProps {
 export function ShowGrid({ shows, compact = false }: ShowGridProps) {
   if (shows.length === 0) {
     return (
-      <div className="py-16 text-center text-[#678]">
-        <p className="text-lg text-[#9ab]">No shows found</p>
+      <div className="py-16 text-center text-[var(--color-subtle)]">
+        <p className="text-lg text-[var(--color-muted)]">No shows found</p>
         <p className="mt-1 text-sm">Try a different search or filter.</p>
       </div>
     );

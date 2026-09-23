@@ -32,9 +32,9 @@ export async function ListCard({
 
   return (
     <Link href={`/lists/${id}`} className="group block">
-      <div className="grid aspect-[5/2] grid-cols-5 gap-0.5 overflow-hidden rounded bg-[#2c3440]">
+      <div className="grid aspect-[5/2] grid-cols-5 gap-0.5 overflow-hidden rounded bg-[var(--color-overlay)]">
         {posters.map((src, i) => (
-          <div key={i} className="relative overflow-hidden bg-[#1c2228]">
+          <div key={i} className="relative overflow-hidden bg-[var(--color-elevated)]">
             {src ? (
               <Image src={src} alt="" fill className="object-cover" sizes="80px" />
             ) : null}
@@ -42,10 +42,10 @@ export async function ListCard({
         ))}
       </div>
       <div className="mt-2">
-        <h3 className="font-semibold text-[#9ab] group-hover:text-white">{title}</h3>
-        <p className="text-xs text-[#678]">
+        <h3 className="font-semibold text-[var(--color-muted)] group-hover:text-[var(--color-text)]">{title}</h3>
+        <p className="text-xs text-[var(--color-subtle)]">
           {itemCount} shows · by{" "}
-          <span className="text-[#9ab]">{authorName}</span>
+          <span className="text-[var(--color-muted)]">{authorName}</span>
         </p>
       </div>
     </Link>
