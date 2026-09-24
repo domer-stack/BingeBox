@@ -16,7 +16,7 @@ export default async function DiaryPage() {
 
   if (!session) {
     return (
-      <div className="mx-auto max-w-6xl px-5 py-16 text-center">
+      <div className="page-shell max-w-6xl py-16 text-center">
         <h1 className="text-2xl font-bold">Your Diary</h1>
         <p className="mx-auto mt-3 max-w-md text-[var(--color-muted)]">
           Log every episode you watch, in order — your personal TV diary.
@@ -41,7 +41,7 @@ export default async function DiaryPage() {
   }
 
   return (
-    <div className="mx-auto max-w-6xl px-5 py-10">
+    <div className="page-shell max-w-6xl">
       <h1 className="text-2xl font-bold">Your Diary</h1>
       <p className="mt-1 text-sm text-[var(--color-subtle)]">{entries.length} episodes logged</p>
 

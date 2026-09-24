@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { FormEvent, KeyboardEvent, useCallback, useEffect, useRef, useState } from "react";
 
 type SearchResult = {
@@ -14,12 +14,12 @@ type SearchResult = {
 
 interface SearchBarProps {
   className?: string;
-  /** Full-width fixed dropdown under header on small screens */
-  mobileOverlay?: boolean;
+  variant?: "default" | "mobile";
 }
 
-export function SearchBar({ className = "", mobileOverlay = false }: SearchBarProps) {
+export function SearchBar({ className = "", variant = "default" }: SearchBarProps) {
   const router = useRouter();
+  const pathname = usePathname();
   const wrapperRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const [query, setQuery] = useState("");
@@ -55,6 +55,11 @@ export function SearchBar({ className = "", mobileOverlay = false }: SearchBarPr
     }, 280);
     return () => window.clearTimeout(timer);
   }, [query, fetchResults]);
+
+  useEffect(() => {
+    setOpen(false);
+    setActiveIndex(-1);
+  }, [pathname]);
 
   useEffect(() => {
     function onPointerOutside(e: MouseEvent | TouchEvent) {
@@ -108,7 +113,7 @@ export function SearchBar({ className = "", mobileOverlay = false }: SearchBarPr
   return (
     <div
       ref={wrapperRef}
-      className={`search-bar relative ${mobileOverlay ? "search-bar--mobile" : ""} ${className}`.trim()}
+      className={`search-bar relative ${variant === "mobile" ? "search-bar--mobile" : ""} ${className}`.trim()}
     >
       <form onSubmit={onSubmit} role="search">
         <svg
@@ -140,7 +145,7 @@ export function SearchBar({ className = "", mobileOverlay = false }: SearchBarPr
         <ul
           id="search-suggestions"
           role="listbox"
-          className={`search-suggestions ${mobileOverlay ? "search-suggestions--mobile" : ""}`}
+          className={`search-suggestions ${variant === "mobile" ? "search-suggestions--mobile" : ""}`}
         >
           {loading && results.length === 0 && (
             <li className="search-suggestion-muted px-3 py-3 text-sm">Searching…</li>

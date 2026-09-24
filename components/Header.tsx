@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useEffect, useRef } from "react";
 import { BrandLogo } from "./BrandLogo";
 import { HeaderAuth } from "./HeaderAuth";
 import { MobileNav } from "./MobileNav";
@@ -20,10 +21,33 @@ const NAV = [
 
 export function Header() {
   const pathname = usePathname();
+  const headerRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const el = headerRef.current;
+    if (!el) return;
+
+    const syncHeaderHeight = () => {
+      document.documentElement.style.setProperty("--site-header-height", `${el.offsetHeight}px`);
+    };
+
+    syncHeaderHeight();
+    const observer = new ResizeObserver(syncHeaderHeight);
+    observer.observe(el);
+    window.addEventListener("resize", syncHeaderHeight);
+
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("resize", syncHeaderHeight);
+    };
+  }, []);
 
   return (
-    <header className="site-header glass sticky top-0 z-50 border-b border-[var(--color-border)]">
-      <div className="relative z-10 mx-auto max-w-6xl">
+    <header
+      ref={headerRef}
+      className="site-header glass sticky top-0 z-50 overflow-visible border-b border-[var(--color-border)]"
+    >
+      <div className="site-header-inner relative z-10 mx-auto max-w-6xl overflow-visible">
         <div className="flex h-14 items-center gap-2 px-4 md:h-[3.75rem] md:gap-4 md:px-5">
           <BrandLogo size="sm" />
 
@@ -49,7 +73,7 @@ export function Header() {
         </div>
 
         <div className="border-t border-[var(--color-border)] px-4 pb-3 pt-2 md:hidden">
-          <SearchBar className="w-full max-w-none" mobileOverlay />
+          <SearchBar className="w-full max-w-none" variant="mobile" />
         </div>
       </div>
     </header>

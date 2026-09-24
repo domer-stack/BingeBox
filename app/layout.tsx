@@ -46,7 +46,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <div className="ambient-bg" aria-hidden="true" />
         <Providers>
           <Header />
-          <main className="relative z-10">{children}</main>
+          <main className="relative z-0">{children}</main>
           <Footer />
         </Providers>
       </body>
