@@ -164,7 +164,10 @@ body {
   font-family: var(--font-body);
   line-height: 1.6;
   min-height: 100vh;
+  min-height: 100dvh;
+  overflow-x: clip;
   -webkit-font-smoothing: antialiased;
+  padding-bottom: env(safe-area-inset-bottom, 0px);
 }
 
 h1, h2, h3, h4 {
@@ -557,7 +560,15 @@ a:hover {
   z-index: 1;
   max-width: 72rem;
   margin: 0 auto;
-  padding: 2.5rem 1.25rem;
+  padding: 1.5rem 1rem;
+  padding-left: max(1rem, env(safe-area-inset-left, 0px));
+  padding-right: max(1rem, env(safe-area-inset-right, 0px));
+}
+
+@media (min-width: 768px) {
+  .page-shell {
+    padding: 2.5rem 1.25rem;
+  }
 }
 
 /* Hero carousel */
@@ -909,4 +920,95 @@ body,
 .glass-input,
 .ambient-bg {
   transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Mobile: touch targets, search, safe areas */
+.touch-target {
+  min-width: 2.75rem;
+  min-height: 2.75rem;
+}
+
+.touch-target-compact {
+  min-height: 2.75rem;
+  align-items: center;
+}
+
+.search-input {
+  font-size: 1rem;
+  line-height: 1.25;
+}
+
+@media (min-width: 768px) {
+  .search-input {
+    font-size: 0.875rem;
+  }
+}
+
+.site-header {
+  padding-top: env(safe-area-inset-top, 0px);
+}
+
+@media (max-width: 767px) {
+  .glass-input {
+    font-size: 1rem;
+  }
+
+  .search-bar--mobile {
+    z-index: 80;
+  }
+
+  .search-suggestions--mobile {
+    position: fixed;
+    left: max(1rem, env(safe-area-inset-left, 0px));
+    right: max(1rem, env(safe-area-inset-right, 0px));
+    top: calc(env(safe-area-inset-top, 0px) + 7rem);
+    max-height: min(52dvh, 22rem);
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .search-suggestion {
+    min-height: 2.75rem;
+    padding-top: 0.625rem;
+    padding-bottom: 0.625rem;
+  }
+
+  .mobile-nav-panel {
+    top: calc(env(safe-area-inset-top, 0px) + 7rem);
+    max-height: calc(100dvh - env(safe-area-inset-top, 0px) - 7rem);
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .theme-toggle {
+    width: 2.75rem;
+    height: 2.75rem;
+  }
+
+  .hero-dot {
+    min-width: 2.75rem;
+    min-height: 0.75rem;
+    padding: 0.25rem 0;
+  }
+
+  .hero-arrow {
+    width: 2.75rem;
+    height: 2.75rem;
+    font-size: 1.25rem;
+  }
+
+  .star-rating-chip {
+    min-width: 2.75rem;
+    min-height: 2.75rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .horizontal-scroll-snap {
+    scroll-padding-inline: 1rem;
+    scroll-snap-type: x mandatory;
+  }
+
+  .horizontal-scroll-snap > * {
+    scroll-snap-align: start;
+  }
 }

@@ -13,7 +13,7 @@ export function StarRatingInput({ value, onChange }: StarRatingInputProps) {
           key={v}
           type="button"
           onClick={() => onChange(value === v ? null : v)}
-          className={`rounded px-2 py-1 text-sm tabular-nums transition ${
+          className={`star-rating-chip rounded px-2 py-1 text-sm tabular-nums transition ${
             value === v
               ? "bg-[var(--chip-active-bg)] text-[var(--color-accent-soft)] ring-1 ring-[var(--chip-active-border)]"
               : "bg-[var(--chip-bg)] text-[var(--color-muted)] hover:text-[var(--color-text)]"

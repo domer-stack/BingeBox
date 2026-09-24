@@ -64,8 +64,8 @@ export default async function ShowPage({ params }: ShowPageProps) {
         )}
         <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-base)] via-[var(--color-base)]/75 to-[var(--color-base)]/35" />
 
-        <div className="relative mx-auto grid max-w-6xl gap-8 px-5 py-10 md:grid-cols-[200px_1fr]">
-          <div className="relative aspect-[2/3] overflow-hidden rounded shadow-2xl">
+        <div className="relative mx-auto grid max-w-6xl gap-8 px-4 py-8 sm:px-5 sm:py-10 md:grid-cols-[200px_1fr]">
+          <div className="relative mx-auto aspect-[2/3] w-full max-w-[200px] overflow-hidden rounded shadow-2xl md:mx-0 md:max-w-none">
             {poster ? (
               <Image src={poster} alt={show.name} fill className="object-cover" sizes="200px" />
             ) : (

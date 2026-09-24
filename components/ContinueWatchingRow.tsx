@@ -11,7 +11,7 @@ export function ContinueWatchingRow({ items }: ContinueWatchingRowProps) {
   if (items.length === 0) return null;
 
   return (
-    <div className="flex gap-4 overflow-x-auto pb-2 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+    <div className="horizontal-scroll-snap flex gap-4 overflow-x-auto pb-2 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
       {items.map((item) => {
         const src = posterUrl(item.posterPath, "w342");
         return (

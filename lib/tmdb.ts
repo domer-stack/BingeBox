@@ -107,19 +107,33 @@ export async function tmdbFetch<T>(
   return res.json() as Promise<T>;
 }
 
+function normalizeTmdbImagePath(path: string): string {
+  const trimmed = path.trim();
+  if (trimmed.startsWith("http://") || trimmed.startsWith("https://")) {
+    return trimmed;
+  }
+  return trimmed.startsWith("/") ? trimmed : `/${trimmed}`;
+}
+
 export function posterUrl(path: string | null | undefined, size: ImageSize = "w500"): string | null {
   if (!path) return null;
-  return `${IMAGE_BASE}/${size}${path}`;
+  const normalized = normalizeTmdbImagePath(path);
+  if (normalized.startsWith("http")) return normalized;
+  return `${IMAGE_BASE}/${size}${normalized}`;
 }
 
 export function backdropUrl(path: string | null | undefined, size: ImageSize = "w1280"): string | null {
   if (!path) return null;
-  return `${IMAGE_BASE}/${size}${path}`;
+  const normalized = normalizeTmdbImagePath(path);
+  if (normalized.startsWith("http")) return normalized;
+  return `${IMAGE_BASE}/${size}${normalized}`;
 }
 
 export function stillUrl(path: string | null | undefined, size: ImageSize = "w300"): string | null {
   if (!path) return null;
-  return `${IMAGE_BASE}/${size}${path}`;
+  const normalized = normalizeTmdbImagePath(path);
+  if (normalized.startsWith("http")) return normalized;
+  return `${IMAGE_BASE}/${size}${normalized}`;
 }
 
 export function showYearRange(firstAirDate: string, lastAirDate?: string, inProduction?: boolean): string {

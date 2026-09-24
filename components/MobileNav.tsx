@@ -34,31 +34,40 @@ export function MobileNav() {
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}
-        className="flex h-9 w-9 items-center justify-center rounded-lg border border-[var(--color-border)] bg-[var(--chip-bg)] text-[var(--color-muted)]"
+        className="touch-target flex items-center justify-center rounded-lg border border-[var(--color-border)] bg-[var(--chip-bg)] text-[var(--color-muted)]"
         aria-expanded={open}
         aria-label={open ? "Close menu" : "Open menu"}
       >
-        {open ? "✕" : "☰"}
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
+          {open ? (
+            <path d="M6 6l12 12M18 6L6 18" />
+          ) : (
+            <path d="M4 7h16M4 12h16M4 17h16" />
+          )}
+        </svg>
       </button>
 
       {open && (
         <>
           <button
             type="button"
-            className="fixed inset-0 z-40 bg-[var(--overlay-scrim)] backdrop-blur-sm"
+            className="mobile-nav-backdrop fixed inset-0 z-[90] bg-[var(--overlay-scrim)] backdrop-blur-sm"
             aria-label="Close menu"
             onClick={() => setOpen(false)}
           />
-          <nav className="fixed left-0 right-0 top-[3.75rem] z-50 border-b border-[var(--color-border)] bg-[var(--glass-bg)] p-4 backdrop-blur-xl">
+          <nav
+            className="mobile-nav-panel fixed left-0 right-0 z-[95] overflow-y-auto border-b border-[var(--color-border)] bg-[var(--glass-bg)] p-3 backdrop-blur-xl"
+            aria-label="Mobile"
+          >
             <ul className="space-y-1">
               {NAV.map(({ href, label }) => (
                 <li key={href}>
                   <Link
                     href={href}
-                    className={`block rounded-lg px-4 py-3 text-sm font-medium transition ${
+                    className={`flex min-h-[48px] items-center rounded-lg px-4 text-base font-medium transition ${
                       pathname === href
                         ? "bg-[var(--nav-active-bg)] text-[var(--color-accent-soft)]"
-                        : "text-[var(--color-muted)] hover:bg-[var(--surface-hover)] hover:text-[var(--color-text)]"
+                        : "text-[var(--color-muted)] active:bg-[var(--surface-hover-strong)]"
                     }`}
                   >
                     {label}

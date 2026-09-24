@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Providers } from "@/components/Providers";
@@ -18,6 +18,16 @@ export const metadata: Metadata = {
     siteName: "BingeBox",
     images: [{ url: "/logo.png", width: 1024, height: 1024, alt: "BingeBox logo" }],
   },
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#e4ebf5" },
+    { media: "(prefers-color-scheme: dark)", color: "#08090d" },
+  ],
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

@@ -66,7 +66,7 @@ export function HeroCarousel({ slides }: HeroCarouselProps) {
 
   return (
     <section
-      className={`hero-carousel relative flex min-h-[580px] items-center overflow-hidden md:min-h-[640px]${paused ? " hero-carousel--paused" : ""}`}
+      className={`hero-carousel relative flex min-h-[420px] items-center overflow-hidden sm:min-h-[520px] md:min-h-[640px]${paused ? " hero-carousel--paused" : ""}`}
       style={{ ["--hero-interval" as string]: `${INTERVAL_MS}ms` }}
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
@@ -105,9 +105,9 @@ export function HeroCarousel({ slides }: HeroCarouselProps) {
         style={{ background: "radial-gradient(circle, var(--color-violet-glow) 0%, transparent 70%)" }}
       />
 
-      <div className="page-shell relative w-full py-14 md:py-20">
+      <div className="page-shell relative w-full py-10 md:py-20">
         <p className="section-eyebrow mb-3">Trending this week</p>
-        <h1 className="hero-title max-w-2xl text-4xl font-extrabold leading-[1.08] md:text-5xl lg:text-6xl">
+        <h1 className="hero-title max-w-2xl text-3xl font-extrabold leading-[1.08] sm:text-4xl md:text-5xl lg:text-6xl">
           Your life in <span className="text-gradient text-gradient-live">TV</span>
         </h1>
 

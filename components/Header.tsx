@@ -22,27 +22,35 @@ export function Header() {
   const pathname = usePathname();
 
   return (
-    <header className="glass sticky top-0 z-50 border-b border-[var(--color-border)]">
-      <div className="relative z-10 mx-auto flex h-[3.75rem] max-w-6xl items-center gap-4 px-5 lg:gap-6">
-        <BrandLogo size="sm" />
+    <header className="site-header glass sticky top-0 z-50 border-b border-[var(--color-border)]">
+      <div className="relative z-10 mx-auto max-w-6xl">
+        <div className="flex h-14 items-center gap-2 px-4 md:h-[3.75rem] md:gap-4 md:px-5">
+          <BrandLogo size="sm" />
 
-        <nav className="hidden items-center gap-1 md:flex">
-          {NAV.map(({ href, label }) => (
-            <Link
-              key={href}
-              href={href}
-              className={`nav-pill ${pathname === href ? "nav-pill-active" : ""}`}
-            >
-              {label}
-            </Link>
-          ))}
-        </nav>
+          <nav className="hidden min-w-0 flex-1 items-center gap-1 md:flex">
+            {NAV.map(({ href, label }) => (
+              <Link
+                key={href}
+                href={href}
+                className={`nav-pill ${pathname === href ? "nav-pill-active" : ""}`}
+              >
+                {label}
+              </Link>
+            ))}
+          </nav>
 
-        <SearchBar />
+          <SearchBar className="hidden min-w-0 md:ml-auto md:flex md:max-w-xs md:flex-1 lg:max-w-sm" />
 
-        <MobileNav />
-        <ThemeToggle />
-        <HeaderAuth />
+          <div className="ml-auto flex shrink-0 items-center gap-1.5 md:ml-0">
+            <ThemeToggle />
+            <HeaderAuth />
+            <MobileNav />
+          </div>
+        </div>
+
+        <div className="border-t border-[var(--color-border)] px-4 pb-3 pt-2 md:hidden">
+          <SearchBar className="w-full max-w-none" mobileOverlay />
+        </div>
       </div>
     </header>
   );

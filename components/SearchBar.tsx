@@ -12,7 +12,13 @@ type SearchResult = {
   posterUrl: string | null;
 };
 
-export function SearchBar() {
+interface SearchBarProps {
+  className?: string;
+  /** Full-width fixed dropdown under header on small screens */
+  mobileOverlay?: boolean;
+}
+
+export function SearchBar({ className = "", mobileOverlay = false }: SearchBarProps) {
   const router = useRouter();
   const wrapperRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -51,13 +57,17 @@ export function SearchBar() {
   }, [query, fetchResults]);
 
   useEffect(() => {
-    function onClickOutside(e: MouseEvent) {
+    function onPointerOutside(e: MouseEvent | TouchEvent) {
       if (wrapperRef.current && !wrapperRef.current.contains(e.target as Node)) {
         setOpen(false);
       }
     }
-    document.addEventListener("mousedown", onClickOutside);
-    return () => document.removeEventListener("mousedown", onClickOutside);
+    document.addEventListener("mousedown", onPointerOutside);
+    document.addEventListener("touchstart", onPointerOutside, { passive: true });
+    return () => {
+      document.removeEventListener("mousedown", onPointerOutside);
+      document.removeEventListener("touchstart", onPointerOutside);
+    };
   }, []);
 
   function goToBrowse(term: string) {
@@ -89,13 +99,17 @@ export function SearchBar() {
     } else if (e.key === "Escape") {
       setOpen(false);
       setActiveIndex(-1);
+      inputRef.current?.blur();
     }
   }
 
   const showDropdown = open && query.trim().length >= 2;
 
   return (
-    <div ref={wrapperRef} className="search-bar relative ml-auto max-w-[220px] flex-1 lg:max-w-xs">
+    <div
+      ref={wrapperRef}
+      className={`search-bar relative ${mobileOverlay ? "search-bar--mobile" : ""} ${className}`.trim()}
+    >
       <form onSubmit={onSubmit} role="search">
         <svg
           className="pointer-events-none absolute left-3 top-1/2 z-10 h-4 w-4 -translate-y-1/2 fill-[var(--color-subtle)]"
@@ -107,12 +121,14 @@ export function SearchBar() {
         <input
           ref={inputRef}
           type="search"
+          enterKeyHint="search"
+          autoComplete="off"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           onFocus={() => query.trim().length >= 2 && results.length > 0 && setOpen(true)}
           onKeyDown={onKeyDown}
           placeholder="Search shows…"
-          className="glass-input w-full py-2 pl-9 pr-3 text-sm"
+          className="glass-input search-input w-full py-2.5 pl-9 pr-3"
           role="combobox"
           aria-expanded={showDropdown}
           aria-autocomplete="list"
@@ -124,13 +140,13 @@ export function SearchBar() {
         <ul
           id="search-suggestions"
           role="listbox"
-          className="search-suggestions"
+          className={`search-suggestions ${mobileOverlay ? "search-suggestions--mobile" : ""}`}
         >
           {loading && results.length === 0 && (
-            <li className="search-suggestion-muted px-3 py-2.5 text-sm">Searching…</li>
+            <li className="search-suggestion-muted px-3 py-3 text-sm">Searching…</li>
           )}
           {!loading && results.length === 0 && (
-            <li className="search-suggestion-muted px-3 py-2.5 text-sm">No shows found</li>
+            <li className="search-suggestion-muted px-3 py-3 text-sm">No shows found</li>
           )}
           {results.map((show, i) => (
             <li key={show.id} role="option" aria-selected={i === activeIndex}>
@@ -159,7 +175,7 @@ export function SearchBar() {
             <li>
               <button
                 type="button"
-                className="search-suggestion-footer w-full text-left text-sm"
+                className="search-suggestion-footer w-full min-h-[44px] text-left text-sm"
                 onClick={() => goToBrowse(query.trim())}
               >
                 See all results for &ldquo;{query.trim()}&rdquo; →

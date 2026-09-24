@@ -11,7 +11,7 @@ import { getActivityFeed } from "@/lib/actions/social";
 import { getPopularShows, getTrendingShows, posterUrl, type TmdbShow } from "@/lib/tmdb";
 
 function toHeroSlide(show: TmdbShow): HeroSlide {
-  const backdropUrl = posterUrl(show.backdrop_path ?? show.poster_path, "original");
+  const backdropUrl = posterUrl(show.backdrop_path ?? show.poster_path, "w1280");
   const year = show.first_air_date ? show.first_air_date.slice(0, 4) : "—";
   return {
     id: show.id,
