@@ -3,7 +3,11 @@ export const dynamic = "force-dynamic";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { auth } from "@/auth";
+import { ShowRatingPicker } from "@/components/ShowRatingPicker";
+import { ShowReviewSection } from "@/components/ShowReviewSection";
 import { StarRating } from "@/components/StarRating";
+import { getPublicShowReviews, getShowReview } from "@/lib/actions/show-reviews";
 import { ShowGrid } from "@/components/ShowGrid";
 import { AddToListButton } from "@/components/AddToListButton";
 import { WatchlistButton } from "@/components/WatchlistButton";
@@ -43,8 +47,14 @@ export default async function ShowPage({ params }: ShowPageProps) {
   );
   const similar = (show as unknown as { similar?: { results: TmdbShow[] } }).similar?.results?.slice(0, 6) ?? [];
   const credits = (show as unknown as { credits?: { cast: { name: string }[] } }).credits;
-  const onWatchlist = await isOnWatchlist(showId);
+  const session = await auth();
+  const [onWatchlist, ownReview, communityReviews] = await Promise.all([
+    isOnWatchlist(showId),
+    getShowReview(showId),
+    getPublicShowReviews(showId, 8),
+  ]);
   const firstSeason = show.seasons.find((s) => s.season_number > 0)?.season_number ?? 1;
+  const reviewsForList = communityReviews.filter((r) => r.user.id !== session?.user?.id);
 
   return (
     <>
@@ -88,6 +98,13 @@ export default async function ShowPage({ params }: ShowPageProps) {
               <StarRating rating={rating} size="lg" showValue />
               <span className="text-sm text-[var(--color-subtle)]">{show.vote_count.toLocaleString()} ratings on TMDb</span>
             </div>
+
+            <ShowRatingPicker
+              tmdbShowId={showId}
+              showName={show.name}
+              signedIn={Boolean(session?.user)}
+              initialRating={ownReview?.rating ?? null}
+            />
 
             <div className="mt-5 flex flex-wrap gap-2">
               <WatchlistButton
@@ -182,6 +199,14 @@ export default async function ShowPage({ params }: ShowPageProps) {
             ))}
         </div>
       </section>
+
+      <ShowReviewSection
+        tmdbShowId={showId}
+        showName={show.name}
+        signedIn={Boolean(session?.user)}
+        ownReview={ownReview ? { body: ownReview.body, rating: ownReview.rating } : null}
+        communityReviews={reviewsForList}
+      />
 
       {similar.length > 0 && (
         <section className="mx-auto max-w-6xl px-5 py-10">

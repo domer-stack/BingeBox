@@ -49,7 +49,7 @@ export function CreateListForm() {
         <input type="checkbox" name="isPublic" value="true" defaultChecked className="accent-[var(--color-accent)]" />
         Public list (visible to everyone)
       </label>
-      {error && <p className="text-sm text-red-400">{error}</p>}
+      {error && <p className="text-sm text-danger">{error}</p>}
       <button
         type="submit"
         disabled={pending}

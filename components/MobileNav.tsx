@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 
 const NAV = [
   { href: "/", label: "Home" },
+  { href: "/discover", label: "Discover" },
   { href: "/browse", label: "Shows" },
   { href: "/lists", label: "Lists" },
   { href: "/members", label: "Members" },
@@ -44,7 +45,7 @@ export function MobileNav() {
         <>
           <button
             type="button"
-            className="fixed inset-0 z-40 bg-black/40 backdrop-blur-sm"
+            className="fixed inset-0 z-40 bg-[var(--overlay-scrim)] backdrop-blur-sm"
             aria-label="Close menu"
             onClick={() => setOpen(false)}
           />

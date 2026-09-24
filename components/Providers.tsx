@@ -2,11 +2,15 @@
 
 import { SessionProvider } from "next-auth/react";
 import { ThemeProvider } from "./ThemeProvider";
+import { PwaRegister } from "./PwaRegister";
 
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
     <ThemeProvider>
-      <SessionProvider>{children}</SessionProvider>
+      <SessionProvider>
+        <PwaRegister />
+        {children}
+      </SessionProvider>
     </ThemeProvider>
   );
 }

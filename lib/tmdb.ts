@@ -169,6 +169,10 @@ export async function getShow(id: number) {
   });
 }
 
+export async function getSimilarShows(id: number, page = 1) {
+  return tmdbFetch<TmdbPaginated<TmdbShow>>(`/tv/${id}/similar`, { page });
+}
+
 export async function getSeason(showId: number, seasonNumber: number) {
   return tmdbFetch<TmdbSeasonDetail>(`/tv/${showId}/season/${seasonNumber}`);
 }

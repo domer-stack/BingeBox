@@ -26,7 +26,7 @@ export function DeleteDiaryButton({ entryId }: DeleteDiaryButtonProps) {
       type="button"
       onClick={onDelete}
       disabled={pending}
-      className="text-xs text-[var(--color-subtle)] hover:text-red-400 disabled:opacity-50"
+      className="text-xs text-[var(--color-subtle)] hover:text-[var(--color-danger)] disabled:opacity-50"
       aria-label="Delete entry"
     >
       {pending ? "…" : "Remove"}

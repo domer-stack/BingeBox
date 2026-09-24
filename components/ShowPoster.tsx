@@ -27,7 +27,7 @@ export function ShowPoster({ show, compact = false }: ShowPosterProps) {
             {show.name}
           </div>
         )}
-        <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/80 to-transparent opacity-0 transition group-hover:opacity-100" />
+        <div className="poster-hover-scrim" aria-hidden />
       </div>
       <p className="mt-2.5 line-clamp-2 text-sm font-semibold leading-snug text-[var(--color-muted)] transition group-hover:text-[var(--color-text)]">
         {show.name}

@@ -24,7 +24,7 @@ export function RemoveFromListButton({
           router.refresh();
         })
       }
-      className="text-xs text-[var(--color-subtle)] hover:text-red-400 disabled:opacity-50"
+      className="text-xs text-[var(--color-subtle)] hover:text-[var(--color-danger)] disabled:opacity-50"
     >
       Remove
     </button>

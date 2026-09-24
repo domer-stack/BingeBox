@@ -33,11 +33,16 @@ $env:NODE_TLS_REJECT_UNAUTHORIZED="0"; npm run dev
 
 ## Features
 
-- **Auth** — email + username sign up / sign in
+- **Auth** — email + username sign up / sign in; optional Google & GitHub OAuth
+- **Continue watching** — home row with progress and next episode link
+- **For you** — personalized picks from your diary + TMDb similar titles (`/discover`)
+- **Stats** — streaks, 28-day activity, top genres on your profile
+- **Show reviews** — series-level review on each show page (separate from episode diary)
 - **Episode diary** — log episodes with date, half-star rating, and review
 - **Watchlist** — save shows to watch later
-- **Custom lists** — curated show collections (public or private)
+- **Custom lists** — public lists with share link and Open Graph previews
 - **Social** — follow members, activity feed, likes on reviews
+- **PWA** — web app manifest + lightweight service worker for installability
 - **TMDb** — live show metadata, streaming providers, episode details
 
 ## TMDb usage

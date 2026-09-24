@@ -54,6 +54,11 @@
   --shadow-card: none;
   --shadow-card-hover: 0 8px 32px -8px rgba(0, 0, 0, 0.15);
   --shadow-dropdown: 0 16px 48px -12px rgba(0, 0, 0, 0.35);
+  --shadow-header: none;
+  --color-danger: #f87171;
+  --color-danger-hover: #fca5a5;
+  --overlay-scrim: rgba(0, 0, 0, 0.55);
+  --poster-scrim: rgba(0, 0, 0, 0.82);
 }
 
 /* Light theme — cool stream: clearer surfaces, soft elevation, stronger hero legibility */
@@ -104,6 +109,11 @@
   --btn-primary-text: #ffffff;
   --hero-image-opacity: 0.4;
   --hero-overlay: linear-gradient(to right, var(--color-base) 0%, color-mix(in srgb, var(--color-base) 88%, transparent) 50%, color-mix(in srgb, var(--color-base) 35%, transparent) 100%);
+  --shadow-header: 0 1px 0 rgba(15, 23, 42, 0.06), 0 8px 24px -16px rgba(15, 23, 42, 0.12);
+  --color-danger: #dc2626;
+  --color-danger-hover: #b91c1c;
+  --overlay-scrim: rgba(15, 23, 42, 0.35);
+  --poster-scrim: rgba(15, 23, 42, 0.72);
 }
 
 :root {
@@ -120,6 +130,28 @@
 
 [data-theme="light"] .group:hover .poster-frame::before {
   opacity: 1;
+}
+
+[data-theme="light"] .hero-carousel-overlay {
+  background:
+    linear-gradient(to right, var(--color-base) 0%, color-mix(in srgb, var(--color-base) 90%, transparent) 42%, color-mix(in srgb, var(--color-base) 20%, transparent) 100%),
+    linear-gradient(to top, var(--color-base) 0%, transparent 42%, color-mix(in srgb, var(--color-base) 45%, transparent) 100%);
+}
+
+[data-theme="light"] .hero-carousel-shimmer {
+  opacity: 0.22;
+}
+
+[data-theme="light"] .star-filled {
+  text-shadow: 0 0 8px rgba(217, 119, 6, 0.25);
+}
+
+[data-theme="light"] .nav-pill-active {
+  color: var(--color-accent-soft);
+}
+
+[data-theme="light"] footer {
+  background: color-mix(in srgb, var(--color-surface) 70%, var(--color-base));
 }
 
 html {
@@ -178,7 +210,8 @@ a:hover {
   background: var(--glass-bg);
   backdrop-filter: blur(16px) saturate(1.2);
   border: 1px solid var(--color-border);
-  transition: background 0.3s ease, border-color 0.3s ease;
+  box-shadow: var(--shadow-header);
+  transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .glass-card {
@@ -437,6 +470,29 @@ a:hover {
 
 .group:hover .poster-frame::before {
   opacity: 1;
+}
+
+.poster-hover-scrim {
+  pointer-events: none;
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  height: 33.333%;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  background: linear-gradient(to top, var(--poster-scrim) 0%, transparent 100%);
+}
+
+.group:hover .poster-hover-scrim {
+  opacity: 1;
+}
+
+.text-danger {
+  color: var(--color-danger);
+}
+
+.text-danger:hover {
+  color: var(--color-danger-hover);
 }
 
 /* Nav */

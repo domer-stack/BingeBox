@@ -61,8 +61,10 @@ export async function logEpisode(data: {
     where: { userId, tmdbShowId: data.tmdbShowId },
   });
 
+  revalidatePath("/");
   revalidatePath("/diary");
   revalidatePath("/profile");
+  revalidatePath("/discover");
   revalidatePath(`/show/${data.tmdbShowId}`);
   revalidatePath(`/show/${data.tmdbShowId}/season/${data.seasonNumber}`);
   revalidatePath(
@@ -82,8 +84,10 @@ export async function deleteDiaryEntry(entryId: string): Promise<ActionResult> {
   if (!entry) return { ok: false, error: "Entry not found." };
 
   await prisma.diaryEntry.delete({ where: { id: entryId } });
+  revalidatePath("/");
   revalidatePath("/diary");
   revalidatePath("/profile");
+  revalidatePath("/discover");
   revalidatePath(`/show/${entry.tmdbShowId}`);
   revalidatePath(`/show/${entry.tmdbShowId}/season/${entry.seasonNumber}`);
   revalidatePath(

@@ -27,7 +27,7 @@ export function DeleteListButton({ listId, listTitle }: DeleteListButtonProps) {
       type="button"
       onClick={onDelete}
       disabled={pending}
-      className="text-sm text-red-400 hover:text-red-300 disabled:opacity-50"
+      className="text-sm text-danger disabled:opacity-50"
     >
       {pending ? "Deleting…" : "Delete list"}
     </button>

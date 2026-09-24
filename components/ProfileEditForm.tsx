@@ -70,7 +70,7 @@ export function ProfileEditForm({ displayName, bio, avatarId, defaultOpen = fals
             />
           </label>
           {message && (
-            <p className={`mt-3 text-sm ${message.type === "ok" ? "text-[var(--color-accent)]" : "text-red-400"}`}>
+            <p className={`mt-3 text-sm ${message.type === "ok" ? "text-[var(--color-accent)]" : "text-danger"}`}>
               {message.text}
             </p>
           )}

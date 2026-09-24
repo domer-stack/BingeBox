@@ -8,6 +8,8 @@ import { getUserWatchlist } from "@/lib/actions/watchlist";
 import { ListCard } from "@/components/ListCard";
 import { prisma } from "@/lib/prisma";
 import { ProfileEditForm } from "@/components/ProfileEditForm";
+import { ProfileStats } from "@/components/ProfileStats";
+import { getUserStats } from "@/lib/actions/stats";
 import { UserAvatar } from "@/components/UserAvatar";
 import { ShowGrid } from "@/components/ShowGrid";
 import { getShow, type TmdbShow } from "@/lib/tmdb";
@@ -38,10 +40,11 @@ export default async function ProfilePage() {
   }
 
   const user = await prisma.user.findUnique({ where: { id: session.user.id } });
-  const [diary, watchlist, lists] = await Promise.all([
+  const [diary, watchlist, lists, stats] = await Promise.all([
     getUserDiary(session.user.id),
     getUserWatchlist(session.user.id),
     getUserLists(session.user.id),
+    getUserStats(session.user.id),
   ]);
 
   const uniqueShows = new Set(diary.map((e) => e.tmdbShowId)).size;
@@ -89,6 +92,8 @@ export default async function ProfilePage() {
           </div>
         </div>
       </div>
+
+      <ProfileStats stats={stats} />
 
       {lists.length > 0 && (
         <section className="mt-8">

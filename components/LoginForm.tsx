@@ -50,7 +50,7 @@ export function LoginForm() {
           className="glass-input mt-1 w-full px-3 py-2"
         />
       </div>
-      {error && <p className="text-sm text-red-400">{error}</p>}
+      {error && <p className="text-sm text-danger">{error}</p>}
       <button
         type="submit"
         disabled={loading}

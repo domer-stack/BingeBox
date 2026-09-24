@@ -16,7 +16,7 @@ export function HeaderAuth() {
       <div className="flex shrink-0 items-center gap-2">
         <Link
           href="/profile"
-          className="flex max-w-[120px] items-center gap-2 truncate rounded-lg px-2 py-1.5 text-sm font-medium text-[var(--color-muted)] transition hover:bg-white/5 hover:text-[var(--color-text)]"
+          className="flex max-w-[120px] items-center gap-2 truncate rounded-lg px-2 py-1.5 text-sm font-medium text-[var(--color-muted)] transition hover:bg-[var(--surface-hover)] hover:text-[var(--color-text)]"
         >
           <UserAvatar
             avatarId={session.user.avatarId}

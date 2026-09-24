@@ -127,7 +127,7 @@ export function EpisodeLogForm({
       </div>
 
       {message && (
-        <p className={`mt-3 text-sm ${message.type === "ok" ? "text-[var(--color-accent)]" : "text-red-400"}`}>
+        <p className={`mt-3 text-sm ${message.type === "ok" ? "text-[var(--color-accent)]" : "text-danger"}`}>
           {message.text}
         </p>
       )}
@@ -158,7 +158,7 @@ export function EpisodeLogForm({
                 }
               });
             }}
-            className="text-sm text-red-400 hover:text-red-300 disabled:opacity-50"
+            className="text-sm text-danger disabled:opacity-50"
           >
             Remove entry
           </button>
