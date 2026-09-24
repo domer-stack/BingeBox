@@ -953,6 +953,44 @@ body,
   overflow: visible;
 }
 
+/* Desktop header: fixed columns so search never overlaps nav */
+@media (min-width: 768px) {
+  .site-header-toolbar {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) 12.5rem auto;
+    align-items: center;
+    column-gap: 0.75rem;
+  }
+
+  .header-nav {
+    overflow-x: auto;
+    overflow-y: hidden;
+    flex-wrap: nowrap;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .header-nav::-webkit-scrollbar {
+    display: none;
+  }
+
+  .header-search {
+    width: 100%;
+    max-width: 12.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .site-header-toolbar {
+    grid-template-columns: auto minmax(0, 1fr) 14rem auto;
+    column-gap: 1rem;
+  }
+
+  .header-search {
+    max-width: 14rem;
+  }
+}
+
 @media (max-width: 767px) {
   .glass-input {
     font-size: 1rem;

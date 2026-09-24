@@ -48,24 +48,24 @@ export function Header() {
       className="site-header glass sticky top-0 z-50 overflow-visible border-b border-[var(--color-border)]"
     >
       <div className="site-header-inner relative z-10 mx-auto max-w-6xl overflow-visible">
-        <div className="flex h-14 items-center gap-2 px-4 md:h-[3.75rem] md:gap-4 md:px-5">
+        <div className="site-header-toolbar flex h-14 items-center gap-2 px-4 md:h-[3.75rem] md:px-5">
           <BrandLogo size="sm" />
 
-          <nav className="hidden min-w-0 flex-1 items-center gap-1 md:flex">
+          <nav className="header-nav hidden min-w-0 md:flex md:items-center md:gap-0.5 lg:gap-1">
             {NAV.map(({ href, label }) => (
               <Link
                 key={href}
                 href={href}
-                className={`nav-pill ${pathname === href ? "nav-pill-active" : ""}`}
+                className={`nav-pill shrink-0 ${pathname === href ? "nav-pill-active" : ""}`}
               >
                 {label}
               </Link>
             ))}
           </nav>
 
-          <SearchBar className="hidden min-w-0 md:ml-auto md:flex md:max-w-xs md:flex-1 lg:max-w-sm" />
+          <SearchBar className="header-search hidden md:block md:min-w-0 md:w-full" />
 
-          <div className="ml-auto flex shrink-0 items-center gap-1.5 md:ml-0">
+          <div className="header-actions ml-auto flex shrink-0 items-center gap-1.5 md:ml-0">
             <ThemeToggle />
             <HeaderAuth />
             <MobileNav />
